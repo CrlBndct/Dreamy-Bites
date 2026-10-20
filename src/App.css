@@ -1,0 +1,41 @@
+.nav-bar{
+  width: 100%;
+  height: 15vh;
+  border: 1px solid black;
+}
+
+.nav-bar > ul{
+  margin: 10px;
+  list-style-type: none;
+  text-align: center;
+}
+
+.nav-bar > ul > li{
+  display: inline-block;
+  margin: 20px;
+  font-size: 20px;
+}
+
+/* For Intro section */
+
+.intro-sec{
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  border: 1px solid black;
+}
+
+.text{
+  position: absolute;
+  top: 100px;
+  left: 50px;
+}
+
+.text > h1, h3{
+  margin: 10px;
+}
+
+.text > h1{
+  font-size: 60px;
+  width: 65%;
+}
