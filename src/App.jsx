@@ -2,6 +2,23 @@ import './App.css'
 
 function App() {
 
+function Mybutton(props){
+  const buttonStyle ={
+    width: 100,
+    height: 50,
+    backgroundColor: "lightpink",
+    borderRadius: 20,
+    borderColor: "lightpink"
+  };
+
+  return(
+    <>
+      <button style={buttonStyle} className={props.class}>{props.name}</button>
+    </>
+  );
+}
+
+
   return (
     <>
       <div className="nav-bar"> 
@@ -18,6 +35,8 @@ function App() {
           <h1>Taste the Passion Behind Every Creation</h1>
           <h3>Craving something extraordinary? Discover your favorite flavors, explore our menu, and let every bite bring a little more happiness to your day.</h3>
         </div>
+
+        <Mybutton name = "See Menu" class = "btn1"/>
       </div>
     </>
   )
