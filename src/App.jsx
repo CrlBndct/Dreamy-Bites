@@ -1,21 +1,24 @@
+import {foodArray} from './foods'
 import './App.css'
 
 function App() {
 
-function Mybutton(props){
-  const buttonStyle ={
-    backgroundColor: "lightpink",
-    borderRadius: 20,
-    borderColor: "lightpink"
-  };
 
-  return(
-    <>
-      <button style={buttonStyle} className={props.class}>{props.name}</button>
-    </>
-  );
-}
 
+/* ======================================== */
+  function Mybutton(props){
+    const buttonStyle ={
+      backgroundColor: "lightpink",
+      borderRadius: 20,
+      borderColor: "lightpink"
+    };
+
+    return(
+      <>
+        <button style={buttonStyle} className={props.class}>{props.name}</button>
+      </>
+    );
+  }
 
   return (
     <>
@@ -35,6 +38,10 @@ function Mybutton(props){
         </div>
 
         <Mybutton name = "See Our Menu" class = "btn1"/>
+      </div>
+
+      <div className="menu"> 
+        {foodArray.map((foodItem) => <div className = "item">Hello</div>)}
       </div>
     </>
   )
