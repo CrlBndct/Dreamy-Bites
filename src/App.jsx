@@ -4,8 +4,6 @@ function App() {
 
 function Mybutton(props){
   const buttonStyle ={
-    width: 100,
-    height: 50,
     backgroundColor: "lightpink",
     borderRadius: 20,
     borderColor: "lightpink"
@@ -32,11 +30,11 @@ function Mybutton(props){
       <div className="intro-sec"> 
         <div className="text">
           <h3>welcome to our table and</h3>
-          <h1>Taste the Passion Behind Every Creation</h1>
+          <h1 className="tagline">Taste the Passion Behind Every Creation</h1>
           <h3>Craving something extraordinary? Discover your favorite flavors, explore our menu, and let every bite bring a little more happiness to your day.</h3>
         </div>
 
-        <Mybutton name = "See Menu" class = "btn1"/>
+        <Mybutton name = "See Our Menu" class = "btn1"/>
       </div>
     </>
   )

@@ -1,11 +1,12 @@
 .nav-bar{
+  position: fixed;
   width: 100%;
   height: 15vh;
   border: 1px solid black;
 }
 
 .nav-bar > ul{
-  margin: 10px;
+  margin: 15px 15px 20px 20px;
   list-style-type: none;
   text-align: center;
 }
@@ -16,7 +17,9 @@
   font-size: 20px;
 }
 
-/* For Intro section */
+/* ------For Intro section------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@100..900&display=swap');
 
 .intro-sec{
   position: relative;
@@ -39,15 +42,19 @@
   font-size: 60px;
   width: 65%;
   color: lightpink;
-  text-shadow: -5px 2px 3px black;
+  text-shadow: -5px 1px 5px black;
+  font-family: 'Fraunces', serif;
 }
 
 .text > h3{
   width: 60%;
+  color: gray;
 }
 
 .btn1{
   position: absolute;
   top: 450px;
   left: 200px;
+  width: 150px;
+  height: 50px;
 }
