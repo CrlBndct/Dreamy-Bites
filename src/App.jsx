@@ -1,15 +1,14 @@
+import React from 'react';
 import {foodArray} from './foods'
 import './App.css'
 
 function App() {
 
-
-
 /* ======================================== */
   function Mybutton(props){
     const buttonStyle ={
       backgroundColor: "lightpink",
-      borderRadius: 20,
+      borderRadius: 40,
       borderColor: "lightpink"
     };
 
@@ -41,7 +40,11 @@ function App() {
       </div>
 
       <div className="menu"> 
-        {foodArray.map((foodItem) => <div className = "item">Hello</div>)}
+        <h1>Our Menu</h1>
+        {foodArray.map((foodItem) => <div className = "item" key = {foodItem.foodId}>
+          <img src = {foodItem.pic} alt = "Food Image"/>
+          <h2>{foodItem.foodName}</h2>
+        </div>)}
       </div>
     </>
   )
