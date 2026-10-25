@@ -5,79 +5,39 @@ export let foodArray = [
     foodName: "Chocolate Cake",
     foodDes: "A cake that has a chocolate flavor in it",
     price: 400,
-    category: "pastry"
+    category: "Pastry"
   }, 
   {
-    pic: "./src/assets/ChocolateCake.jpg",
+    pic: "./src/assets/Ensaymada.jpg",
     foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
+    foodName: "Ensaymada",
+    foodDes: "A filipino bread with sugar and butter as its flavor",
+    price: 25,
+    category: "Pastry"
   }, 
   {
-    pic: "./src/assets/ChocolateCake.jpg",
+    pic: "./src/assets/Pandesal.jpg",
     foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
+    foodName: "Pandesal",
+    foodDes: "A filipino popular breakfast, best when dipped in coffee",
+    price: 5,
+    category: "Pastry"
   },
   {
-    pic: "./src/assets/ChocolateCake.jpg",
+    pic: "./src/assets/Coke.jpg",
     foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
+    foodName: "Coke",
+    foodDes: "A very satisfying drink for your craves",
+    price: 25,
+    category: "Beverage"
   },
   {
-    pic: "./src/assets/ChocolateCake.jpg",
+    pic: "./src/assets/Frappe.jpg",
     foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
-  },
-  {
-    pic: "./src/assets/ChocolateCake.jpg",
-    foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
-  }, 
-  {
-    pic: "./src/assets/ChocolateCake.jpg",
-    foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
-  }, 
-  {
-    pic: "./src/assets/ChocolateCake.jpg",
-    foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
-  },
-  {
-    pic: "./src/assets/ChocolateCake.jpg",
-    foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
-  },
-  {
-    pic: "./src/assets/ChocolateCake.jpg",
-    foodId: crypto.randomUUID(),
-    foodName: "Chocolate Cake",
-    foodDes: "A cake that has a chocolate flavor in it",
-    price: 400,
-    category: "pastry"
+    foodName: "Frappe",
+    foodDes: "Delicious beverage with cream on top perfect for your aethetics vibes",
+    price: 79,
+    category: "Beverage"
   },
   
 ];
