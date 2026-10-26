@@ -1,10 +1,11 @@
 import { useRef, useState } from 'react';
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import {BrowserRouter, Routes, Route, Link, useParams} from 'react-router-dom';
 import {foodArray} from './foods';
 import './App.css';
-import FoodPage from './foodpage';
+import FoodPage from './FoodPage';
 
 function HomePage(){
+
   const scrollTo = useRef(null);
   const scrollToMenu = () => {
     scrollTo.current.scrollIntoView({behavior: "smooth"});
@@ -61,7 +62,7 @@ function HomePage(){
                   <h1>{foodItem.foodName}</h1>
                   <h3>{foodItem.foodDes}</h3>
                   <h2>Php {foodItem.price}</h2>
-                  <Link to = "/foodpage" className='view'>View</Link>
+                  <Link to = {`/foodpage/${foodItem.foodId}`} className='view'>View</Link>
                 </div>
               )
             } 
@@ -74,8 +75,8 @@ function App() {
   return (
       <BrowserRouter>
         <Routes> 
-          <Route path="/" element={<HomePage />} />
-          <Route path = "/foodpage" element = {<FoodPage/>}/>
+          <Route path = "/" element={<HomePage />} />
+          <Route path = "/foodpage/:item" element = {<FoodPage />}/>
         </Routes>
       </BrowserRouter>
   )
