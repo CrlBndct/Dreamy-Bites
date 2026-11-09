@@ -17,10 +17,10 @@ export default function FoodPage(){
             </div>
             
             {findItems.map((item) =><div className="container" key = {item.foodId}> 
-            <img src = {item.pic} alt="image" className="foodImg"/>
-            <h1 className="proName">{item.foodName}</h1>
-            <h2 className="desc">{item.foodDes}</h2>
-            <button className="addToCart">Add To Cart</button>
+                <img src = {item.pic} alt="image" className="foodImg"/>
+                <h1 className="proName">{item.foodName}</h1>
+                <h2 className="desc">{item.foodDes}</h2>
+                <button className="addToCart">Add To Cart</button>
             </div>)}
         </>
     );

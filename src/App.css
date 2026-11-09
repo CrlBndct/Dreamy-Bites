@@ -115,6 +115,7 @@
   background-color: lightpink;
   color: gray;
   border: none;
+  transition: all ease 0.3s;
 }
 
 .catBtn:focus{
