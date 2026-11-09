@@ -22,7 +22,8 @@ function HomePage(){
       backgroundColor: "lightpink",
       borderRadius: 40,
       borderColor: "lightpink",
-      color: "gray"
+      color: "#FFF4DE",
+      fontSize: 20
     };
 
     return(

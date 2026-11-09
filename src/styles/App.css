@@ -32,8 +32,8 @@
 
 .nav-bar > ul > li > a{
   text-decoration-line: none;
-  color: #faf7f2;
-  text-shadow: 1px 1px 1px black;
+  color: #59443C;
+  /* text-shadow: 1px 1px 1px black; */
 }
 
 /* ------For Intro section------- */
@@ -58,8 +58,8 @@
 .text > h1{
   font-size: 60px;
   width: 65%;
-  color: lightpink;
-  text-shadow: -5px 1px 5px black;
+  color: #80665C;
+  /*text-shadow: -5px 1px 5px black; */
 }
 
 .text > h3{
@@ -87,7 +87,7 @@
 }
 
 .menu > h1{
-  color: lightpink;
+  color: #80665C;
   position: absolute;
   left: 100px;
   top: 30px;
@@ -113,14 +113,14 @@
   padding: 10px;
   border-radius: 30px;
   background-color: lightpink;
-  color: gray;
+  color: #FFF4DE;
   border: none;
   transition: all ease 0.3s;
 }
 
 .catBtn:focus{
-  background-color: gray;
-  color: lightpink;
+  background-color: #ffdbdb;
+  color: #7f665c;
 }
 
 .item{
@@ -128,13 +128,13 @@
   top: 170px;
   left: 90px;
   margin: 20px;
-  border: 1px solid lightpink;
+  /* border: 1px solid lightpink; */
   width: 400px;
   height: 500px;
   border-radius: 20px;
   padding: 0;
-  background-color: lightpink;
-  box-shadow: -10px 10px 20px 5px gray;
+  background-color: #ffccd6;
+  /* box-shadow: -10px 10px 20px 5px gray; */
   overflow: hidden;
   transition: all ease 0.3s;
 }
@@ -154,8 +154,8 @@
 
 .item > h1{
   margin-left: 20px;
-  color: #faf7f2;
-  text-shadow: -4px 1px 5px black;
+  color: #80665C;
+  /* text-shadow: -4px 1px 5px black; */
 }
 
 .item > h3{
@@ -167,20 +167,20 @@
   position: absolute;
   top: 440px;
   left: 15px;
-  color: green;
+  color: #7f665c;
 }
 
 .view {
   position: absolute;
   left: 260px;
   top: 430px;
-  background-color: #faf7f2;
+  background-color: #ffdbdb;
   width: 100px;
   height: 50px;
   border-radius: 25px;
   border-color: #faf7f2;
-  color: lightgray;
-  text-shadow: 1px 1px 1px black;
+  color: #7f665c;
+  /* text-shadow: 1px 1px 1px black; */
   font-size: 25px;
   text-align: center;
   text-decoration-line: none;
