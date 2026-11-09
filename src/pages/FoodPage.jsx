@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
-import { foodArray } from "./foods";
-import "./foodpage.css"
+import { foodArray } from "../foods";
+import "../styles/foodpage.css"
 
 function MainPage(){
 

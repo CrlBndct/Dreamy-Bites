@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import {BrowserRouter, Routes, Route, Link, useParams} from 'react-router-dom';
 import {foodArray} from './foods';
-import './App.css';
-import FoodPage from './FoodPage';
+import './styles/App.css';
+import FoodPage from './pages/FoodPage';
 
 function HomePage(){
 
