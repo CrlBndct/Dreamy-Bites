@@ -9,11 +9,13 @@
   width: 100%;
   height: 10vh;
   z-index: 100;
-  /*border: 1px solid black;*/
+  /* border: 1px solid black; */
 }
 
 .nav-bar > ul{
-  margin: auto;
+  position: absolute;
+  left: 87vh;
+  top: 2vh;
   list-style-type: none;
   text-align: center;
   border: 1px solid pink;
@@ -34,6 +36,28 @@
   text-decoration-line: none;
   color: #59443C;
   /* text-shadow: 1px 1px 1px black; */
+}
+
+.nav-bar > span{
+  display: inline;
+  /* border: 1px solid black; */
+}
+
+.logo-name{
+  position: absolute;
+  font-size: 30px;
+  margin: 10px;
+  color: #FFCED8;
+  border-radius: 30px;
+  padding: 10px;
+}
+
+.cart{
+  position: absolute;
+  left: 80%;
+  font-size: 25px;
+  margin-top: 20px;
+  color: #80665C;
 }
 
 /* ------For Intro section------- */

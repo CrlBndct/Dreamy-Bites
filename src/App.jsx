@@ -36,11 +36,15 @@ function HomePage(){
     return(
         <>
           <div className="nav-bar"> 
+            <span className='logo-name'>Dreamy Bites</span>
+
             <ul> 
               <li><a href='#intro-sec'>Home</a></li>
               <li><a href='#menu'>Menu</a></li>
               <li><a href=''>About</a></li>
             </ul>
+
+            <span className='cart'>Cart</span>
           </div>
 
           <div className="intro-sec" id='intro-sec'> 
@@ -66,7 +70,7 @@ function HomePage(){
                   <Link to = {`/foodpage/${foodItem.foodId}`} className='view'>View</Link>
                 </div>
               )
-            } 
+            }
           </div>
         </>
     );
