@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import {BrowserRouter, Routes, Route, Link, useParams} from 'react-router-dom';
-import {foodArray} from './foods';
-import './styles/App.css';
-import FoodPage from './pages/FoodPage';
+import {foodArray} from '.\\foods';
+import '.\\styles\\App.css';
+import FoodPage from '.\\pages\\FoodPage';
 
 function HomePage(){
 
@@ -36,7 +36,7 @@ function HomePage(){
     return(
         <>
           <div className="nav-bar"> 
-            <span className='logo-name'>Dreamy Bites</span>
+            <span className='logo-name'>Dreamy</span><span className='logo-name2'>Bites</span>
 
             <ul> 
               <li><a href='#intro-sec'>Home</a></li>
@@ -44,7 +44,7 @@ function HomePage(){
               <li><a href=''>About</a></li>
             </ul>
 
-            <span className='cart'>Cart</span>
+            <Link to = "/cart" className='cart'>Cart</Link>
           </div>
 
           <div className="intro-sec" id='intro-sec'> 

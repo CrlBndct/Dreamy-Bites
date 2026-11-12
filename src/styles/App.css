@@ -47,17 +47,29 @@
   position: absolute;
   font-size: 30px;
   margin: 10px;
-  color: #FFCED8;
+  background-color: pink;
+  color: #FFF4DE;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.logo-name2{
+  position: absolute;
+  left: 105px;
+  font-size: 30px;
+  margin: 10px;
+  color: #59443C;
   border-radius: 30px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .cart{
   position: absolute;
   left: 80%;
-  font-size: 25px;
+  font-size: 20px;
   margin-top: 20px;
   color: #80665C;
+  text-decoration: none;
 }
 
 /* ------For Intro section------- */
@@ -178,13 +190,13 @@
 
 .item > h1{
   margin-left: 20px;
-  color: #80665C;
+  color: #59443C;
   /* text-shadow: -4px 1px 5px black; */
 }
 
 .item > h3{
   margin-left: 20px;
-  color: gray;
+  color: #80665C;
 }
 
 .item > h2{

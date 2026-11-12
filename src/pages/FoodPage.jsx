@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
-import { foodArray } from "../foods";
-import "../styles/foodpage.css"
+import { foodArray } from "..\\foods";
+import "..\\styles\\foodpage.css"
 
 function MainPage(){
 
@@ -13,7 +13,8 @@ export default function FoodPage(){
     return(
         <>
             <div className="nav">
-                <Link to = "/" className="backHomeBtn">Home</Link>
+                <h1 style={{color: "#80665C"}}>Dreamy Bites</h1>
+                <Link to = "/#menu" className="backHomeBtn">Home</Link>
             </div>
             
             {findItems.map((item) =><div className="container" key = {item.foodId}> 
