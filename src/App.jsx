@@ -44,7 +44,7 @@ function HomePage(){
               <li><a href=''>About</a></li>
             </ul>
 
-            <Link to = "/cart" className='cart'>Cart</Link>
+            <Link to = "/cart" className='cart'>Basket</Link>
           </div>
 
           <div className="intro-sec" id='intro-sec'> 

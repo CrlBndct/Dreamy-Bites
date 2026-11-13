@@ -27,6 +27,16 @@
     color: #FFF4DE;
 }
 
+.cart{
+  position: absolute;
+  left: 90%;
+  top: 5px;
+  font-size: 20px;
+  margin-top: 20px;
+  color: #80665C;
+  text-decoration: none;
+}
+
 .foodImg{
     position: absolute;
     top: 130px;
@@ -34,25 +44,54 @@
     width: 60vh;
     height: 60vh;
     object-fit: fill;
+    border-radius: 20px;
+    box-shadow: -5px 5px 10px 5px #59443C;
 }
 
 .proName{
     position: absolute;
-    top: 250px;
+    top: 170px;
     left: 700px;
+    border-left-style: solid;
+    border-left-color: pink;
+    border-width: 10px;
+    background-color: #ffdbdb;
+    color: #59443C;
+    font-size: 50px;
 }
 
 .desc{
+    box-sizing: border-box;
     position: absolute;
-    top:300px;
+    top:250px;
     left: 700px;
+    background-color: #ffdbdb;
+    width: 600px;
+    height: 200px;
+    padding: 10px;
+    color: #7f665c;
+}
+
+.pricing{
+    position: absolute;
+    top: 480px;
+    left: 700px;
+    font-size: 40px;
+    color: #7f665c;
 }
 
 .addToCart{
     position: absolute;
-    top: 400px;
-    left: 700px;
-    width: 100px;
+    top: 480px;
+    left: 1150px;
+    width: 150px;
     height: 50px;
     border-radius: 30px;
+    background-color: #7f665c;
+    border: 5px solid black;
+    color: #FFF4DE;
+}
+
+.addToCart:hover{
+    border: 5px dotted black;
 }
