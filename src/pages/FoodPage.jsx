@@ -2,6 +2,19 @@ import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom"
 import { foodArray } from "..\\foods";
 import "..\\styles\\foodpage.css"
 
+function Quantity(){
+    return(
+        <>
+            <div className="background-div"> 
+                <div> 
+                
+
+                </div>
+            </div>
+        </>
+    );
+}
+
 export default function FoodPage(){
     let {item} = useParams();
 
@@ -21,6 +34,8 @@ export default function FoodPage(){
                 <button className="addToCart">Add To My Basket</button>
                 <span className="pricing">Php {item.price}</span>
             </div>)}
-        </>
+
+            <Quantity />
+        </>  
     );
 }
