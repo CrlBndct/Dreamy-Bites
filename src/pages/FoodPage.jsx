@@ -1,13 +1,21 @@
-import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useParams,  } from "react-router-dom";
+import { useState } from "react";
 import { foodArray } from "..\\foods";
 import "..\\styles\\foodpage.css"
 
-function Quantity(){
+function Quantity(props){
+    let {item} = useParams();
+    let foundItems = foodArray.filter((foods) => foods.foodId == item);
+
+
     return(
         <>
-            <div className="background-div"> 
-                <div> 
-                
+            <div className="background-div" style={{display: props.dis}}> 
+                <div className="foodVar">
+                    {foundItems.map(() => {
+                        
+                    }
+                    )}
 
                 </div>
             </div>
@@ -17,6 +25,7 @@ function Quantity(){
 
 export default function FoodPage(){
     let {item} = useParams();
+    let [dis, setDis] = useState("none");
 
     let findItems = foodArray.filter((food) => food.foodId == item);
     return(
@@ -31,11 +40,11 @@ export default function FoodPage(){
                 <img src = {item.pic} alt="image" className="foodImg"/>
                 <h1 className="proName">{item.foodName}</h1>
                 <h2 className="desc">{item.foodDes}</h2>
-                <button className="addToCart">Add To My Basket</button>
+                <button className="addToCart" onClick={() => setDis("block")}>Add To My Basket</button>
                 <span className="pricing">Php {item.price}</span>
             </div>)}
 
-            <Quantity />
+            <Quantity dis = {dis}/>
         </>  
     );
 }
