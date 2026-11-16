@@ -28,7 +28,7 @@ export default function FoodPage(){
         <>
             <div className="nav">
                 <h1 style={{color: "#80665C"}}>Dreamy Bites</h1>
-                <Link to = "/#menu" className="backHomeBtn">Home</Link>
+                <Link to = "/homepage" className="backHomeBtn">Home</Link>
                 <Link to = "/cart" className="cart">Basket</Link>
             </div>
             
