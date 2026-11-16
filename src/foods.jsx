@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 export let foodArray = [
   {
     pic: "/src/assets/ChocolateCake.jpg",
@@ -5,7 +7,8 @@ export let foodArray = [
     foodName: "Chocolate Cake",
     foodDes: "A cake that has a chocolate flavor in it",
     price: 400,
-    category: "Pastry"
+    category: "Pastry",
+    quantity: 0
   }, 
   {
     pic: "/src/assets/Ensaymada.jpg",
@@ -13,7 +16,8 @@ export let foodArray = [
     foodName: "Ensaymada",
     foodDes: "A filipino bread with sugar and butter as its flavor",
     price: 25,
-    category: "Pastry"
+    category: "Pastry",
+    quantity: 0
   }, 
   {
     pic: "/src/assets/Pandesal.jpg",
@@ -21,7 +25,8 @@ export let foodArray = [
     foodName: "Pandesal",
     foodDes: "A filipino popular breakfast, best when dipped in coffee",
     price: 5,
-    category: "Pastry"
+    category: "Pastry",
+    quantity: 0
   },
   {
     pic: "/src/assets/Coke.jpg",
@@ -29,7 +34,8 @@ export let foodArray = [
     foodName: "Coke",
     foodDes: "A very satisfying drink for your craves",
     price: 25,
-    category: "Beverage"
+    category: "Beverage",
+    quantity: 0
   },
   
 ];

@@ -80,6 +80,32 @@
     color: #7f665c;
 }
 
+.subtract{
+    box-sizing: border-box;
+    position: absolute;
+    top: 490px;
+    left: 950px;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+}
+
+.quantity{
+    position: absolute;
+    top: 480px;
+    left: 1000px;
+    font-size: 40px;
+}
+
+.add{
+    position: absolute;
+    top: 490px;
+    left: 1040px;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+}
+
 .addToCart{
     position: absolute;
     top: 480px;
@@ -98,7 +124,7 @@
 
 /* Quantity and Variation */
 
-.background-div{
+/* .background-div{
     position: absolute;
     margin: 0;
     padding: 0;
@@ -115,4 +141,4 @@
     position: absolute;
     left: 50%;
     background-color: #FFCED8;
-}
+} */
