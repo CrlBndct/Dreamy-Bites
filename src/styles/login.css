@@ -1,0 +1,21 @@
+fieldset{
+    position: absolute;
+    top: 15%;
+    left: 33%;
+    width: 500px;
+    height: 300px;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+fieldset > legend{
+    font-size: 30px;
+}
+
+input{
+    position: relative;
+    top: 50px;
+    left: 140px;
+    width: 200px;
+    height: 40px;
+}

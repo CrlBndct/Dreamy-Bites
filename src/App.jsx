@@ -82,7 +82,7 @@ function App() {
   return (
       <BrowserRouter>
         <Routes> 
-          <Route path = "/login" element={<Login />} />
+          <Route path = "/" element={<Login />} />
           <Route path = "/homepage" element = {<HomePage />}></Route>
           <Route path = "/foodpage/:item" element = {<FoodPage />}/>
         </Routes>
