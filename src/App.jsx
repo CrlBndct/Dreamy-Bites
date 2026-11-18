@@ -81,7 +81,7 @@ import Login from './pages/Log-in';
 function App() {
   return (
       <BrowserRouter>
-        <Routes> 
+        <Routes>
           <Route path = "/" element={<Login />} />
           <Route path = "/homepage" element = {<HomePage />}></Route>
           <Route path = "/foodpage/:item" element = {<FoodPage />}/>
