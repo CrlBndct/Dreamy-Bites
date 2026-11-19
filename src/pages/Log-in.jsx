@@ -3,13 +3,6 @@ import '..\\styles\\login.css'
 
 export default function Login(){
 
-    function handleNav(){
-        const navTo = useNavigate();
-
-        navTo("");
-    }
-
-
     return(
         <>
             <div className='login'>
@@ -17,7 +10,7 @@ export default function Login(){
                     <legend>Log-in</legend>
                     <input type='email' className='email' placeholder='name@gmail.com'/><br/>
                     <input type='password' className='password' placeholder='Password'/>
-                    <button className='logbtn'>Login</button>
+                    <Link to = "/homepage" className='logbtn'>Login</Link>
                 </fieldset>
             </div>
         </>
