@@ -8,7 +8,9 @@ export let foodArray = [
     foodDes: "A cake that has a chocolate flavor in it",
     price: 400,
     category: "Pastry",
-    quantity: 0
+    quantity: 0,
+    rating: 4.5,       // starting average
+    ratingCount: 20
   }, 
   {
     pic: "/src/assets/Ensaymada.jpg",
@@ -17,7 +19,7 @@ export let foodArray = [
     foodDes: "A filipino bread with sugar and butter as its flavor",
     price: 25,
     category: "Pastry",
-    quantity: 0
+    quantity: 0, 
   }, 
   {
     pic: "/src/assets/Pandesal.jpg",
@@ -26,7 +28,9 @@ export let foodArray = [
     foodDes: "A filipino popular breakfast, best when dipped in coffee",
     price: 5,
     category: "Pastry",
-    quantity: 0
+    quantity: 0, 
+    rating: 4.5,       // starting average
+    ratingCount: 20
   },
   {
     pic: "/src/assets/Coke.jpg",
@@ -35,7 +39,9 @@ export let foodArray = [
     foodDes: "A very satisfying drink for your craves",
     price: 25,
     category: "Beverage",
-    quantity: 0
+    quantity: 0, 
+    rating: 4.5,       // starting average
+    ratingCount: 20
   },
   
 ];

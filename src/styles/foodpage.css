@@ -122,3 +122,41 @@
 .addToCart:hover{
     border: 5px dotted black;
 }
+
+.rating-box, .my-rating{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #7f665c;
+}
+
+.rating-text{
+    font-size: 18px;
+}
+
+.stars{
+    display: flex;
+}
+
+.star{
+    background: none;
+    border: none;
+    font-size: 32px;
+    line-height: 1;
+    color: #d9c5c0;
+    cursor: pointer;
+    padding: 0 2px;
+    transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.star.filled{
+    color: #f4b400;
+}
+
+.star:hover:not(:disabled){
+    transform: scale(1.2);
+}
+
+.star:disabled{
+    cursor: default;
+}

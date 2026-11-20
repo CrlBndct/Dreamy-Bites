@@ -2,6 +2,8 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { foodArray } from '../foods';
 import { useCart } from '../CartContext';
+import StarRating from '../StarRating';
+import { useRatings } from '../useRatings';
 import '../styles/foodpage.css';
 
 export default function FoodPage() {
@@ -9,8 +11,14 @@ export default function FoodPage() {
   const navigate = useNavigate();
   const { addToCart, totalItems } = useCart();
   const [qty, setQty] = useState(1);
+  const { ratings, rate } = useRatings();
 
   const food = foodArray.find((f) => f.foodId === Number(item));
+  const myRating = food ? ratings[food.foodId] || 0 : 0;
+  const average = food
+    ? (food.rating * food.ratingCount + myRating) / (food.ratingCount + (myRating ? 1 : 0))
+    : 0;
+  const votes = food ? food.ratingCount + (myRating ? 1 : 0) : 0;
 
   const handleAdd = () => {
     addToCart(food, qty);
@@ -32,6 +40,15 @@ export default function FoodPage() {
           <img src={food.pic} alt={food.foodName} className="foodImg" />
           <h1 className="proName">{food.foodName}</h1>
           <h2 className="desc">{food.foodDes}</h2>
+          <div className="rating-box">
+            <StarRating value={Math.round(average)} readOnly />
+            <span className="rating-text">{average.toFixed(1)} ({votes} ratings)</span>
+          </div>
+
+          <div className="my-rating">
+            <span>{myRating ? 'Your rating:' : 'Rate this item:'}</span>
+            <StarRating value={myRating} onChange={(stars) => rate(food.foodId, stars)} />
+          </div>
 
           <button className="subtract" onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
           <span className="quantity">{qty}</span>
