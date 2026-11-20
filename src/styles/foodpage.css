@@ -27,9 +27,9 @@
     color: #FFF4DE;
 }
 
-.cart{
+.nav > .cart{
   position: absolute;
-  left: 90%;
+  right: 5%;
   top: 5px;
   font-size: 20px;
   margin-top: 20px;
@@ -37,108 +37,88 @@
   text-decoration: none;
 }
 
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    padding: calc(10vh + 40px) 5% 40px;
+}
+
 .foodImg{
-    position: absolute;
-    top: 130px;
-    left: 200px;
-    width: 60vh;
-    height: 60vh;
-    object-fit: fill;
+    width: 450px;
+    max-width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     border-radius: 20px;
     box-shadow: -5px 5px 10px 5px #59443C;
 }
 
+.details{
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .proName{
-    position: absolute;
-    top: 170px;
-    left: 700px;
-    border-left-style: solid;
-    border-left-color: pink;
-    border-width: 10px;
+    border-left: 10px solid pink;
     background-color: #ffdbdb;
     color: #59443C;
     font-size: 50px;
+    padding-left: 10px;
 }
 
 .desc{
-    box-sizing: border-box;
-    position: absolute;
-    top:250px;
-    left: 700px;
     background-color: #ffdbdb;
-    width: 600px;
-    height: 200px;
+    min-height: 150px;
     padding: 10px;
     color: #7f665c;
 }
 
+.buy-row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+}
+
 .pricing{
-    position: absolute;
-    top: 480px;
-    left: 700px;
     font-size: 40px;
     color: #7f665c;
 }
 
-.subtract{
-    box-sizing: border-box;
-    position: absolute;
-    top: 490px;
-    left: 950px;
-    font-size: 20px;
-    width: 30px;
-    height: 30px;
+.qty-box{
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .quantity{
-    position: absolute;
-    top: 480px;
-    left: 1000px;
     font-size: 40px;
+    color: #59443C;
 }
 
-.add{
-    position: absolute;
-    top: 490px;
-    left: 1040px;
+.subtract, .add{
     font-size: 20px;
     width: 30px;
     height: 30px;
+    cursor: pointer;
 }
 
 .addToCart{
-    position: absolute;
-    top: 480px;
-    left: 1150px;
     width: 150px;
     height: 50px;
     border-radius: 30px;
     background-color: #7f665c;
     border: 5px solid black;
     color: #FFF4DE;
+    cursor: pointer;
 }
 
 .addToCart:hover{
     border: 5px dotted black;
 }
-
-/* Quantity and Variation */
-
-/* .background-div{
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5); 
-    z-index: 100;
-}
-
-.foodVar{
-    border: 1px solid black;
-    width: 50%;
-    height: 100vh;
-    position: absolute;
-    left: 50%;
-    background-color: #FFCED8;
-} */

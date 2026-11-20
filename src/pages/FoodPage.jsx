@@ -1,49 +1,46 @@
-import { BrowserRouter, Routes, Route, Link, useParams,  } from "react-router-dom";
-import { useState } from "react";
-import {foodArray} from "..\\foods";
-import "..\\styles\\foodpage.css"
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { foodArray } from '../foods';
+import { useCart } from '../CartContext';
+import '../styles/foodpage.css';
 
-// function Quantity(props){
-//     let {item} = useParams();
-//     let foundItems = foodArray.filter((foods) => foods.foodId == item);
-//     return(
-//         <>
-//             <div className="background-div" style={{display: props.dis}}> 
-//                 <div className="foodVar">
-//                     {foundItems.map((items) => {  
-//                     }
-//                     )}
-//                 </div>
-//             </div>
-//         </>
-//     );
-// }
+export default function FoodPage() {
+  const { item } = useParams();
+  const navigate = useNavigate();
+  const { addToCart, totalItems } = useCart();
+  const [qty, setQty] = useState(1);
 
-export default function FoodPage(){
-    let {item} = useParams();
-    let [dis, setDis] = useState("none");
+  const food = foodArray.find((f) => f.foodId === Number(item));
 
-    let findItems = foodArray.filter((food) => food.foodId == item);
-    return(
-        <>
-            <div className="nav">
-                <h1 style={{color: "#80665C"}}>Dreamy Bites</h1>
-                <Link to = "/homepage" className="backHomeBtn">Home</Link>
-                <Link to = "/cart" className="cart">Basket</Link>
-            </div>
-            
-            {
+  const handleAdd = () => {
+    addToCart(food, qty);
+    navigate('/cart');
+  };
 
-            findItems.map((item) =><div className="container" key = {item.foodId}> 
-                <img src = {item.pic} alt="image" className="foodImg"/>
-                <h1 className="proName">{item.foodName}</h1>
-                <h2 className="desc">{item.foodDes}</h2>
-                <button className="subtract">-</button>
-                <span className="quantity">{item.quantity}</span>
-                <button className="add">+</button>
-                <button className="addToCart">Add To My Basket</button>
-                <span className="pricing">Php {item.price}</span>
-            </div>)}
-        </>  
-    );
+  return (
+    <>
+      <div className="nav">
+        <h1 style={{ color: '#80665C' }}>Dreamy Bites</h1>
+        <Link to="/homepage" className="backHomeBtn">Home</Link>
+        <Link to="/cart" className="cart">Basket ({totalItems})</Link>
+      </div>
+
+      {!food ? (
+        <h2 style={{ textAlign: 'center' }}>Item not found.</h2>
+      ) : (
+        <div className="container">
+          <img src={food.pic} alt={food.foodName} className="foodImg" />
+          <h1 className="proName">{food.foodName}</h1>
+          <h2 className="desc">{food.foodDes}</h2>
+
+          <button className="subtract" onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
+          <span className="quantity">{qty}</span>
+          <button className="add" onClick={() => setQty((q) => q + 1)}>+</button>
+
+          <button className="addToCart" onClick={handleAdd}>Add To My Basket</button>
+          <span className="pricing">Php {food.price * qty}</span>
+        </div>
+      )}
+    </>
+  );
 }

@@ -1,18 +1,43 @@
-import {BrowserRouter, Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
-import '..\\styles\\login.css'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/login.css';
 
-export default function Login(){
+export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-    return(
-        <>
-            <div className='login'>
-                <fieldset> 
-                    <legend>Log-in</legend>
-                    <input type='email' className='email' placeholder='name@gmail.com'/><br/>
-                    <input type='password' className='password' placeholder='Password'/>
-                    <Link to = "/homepage" className='logbtn'>Login</Link>
-                </fieldset>
-            </div>
-        </>
-    );
+  const handleLogin = (e) => {
+    e.preventDefault(); // stops the page from reloading on submit
+    if (!email.includes('@') || password.length < 4) {
+      setError('Enter a valid email and a password (4+ characters).');
+      return;
+    }
+    navigate('/homepage');
+  };
+
+  return (
+    <form className="login" onSubmit={handleLogin}>
+      <fieldset>
+        <legend>Log-in</legend>
+        <input
+          type="email"
+          className="email"
+          placeholder="name@gmail.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          className="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p className="error">{error}</p>}
+        <button type="submit" className="logbtn">Login</button>
+      </fieldset>
+    </form>
+  );
 }
