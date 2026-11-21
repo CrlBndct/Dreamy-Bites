@@ -1,7 +1,7 @@
 .branches-page{
   max-width: 1200px;
   margin: 0 auto;
-  padding: calc(10vh + 30px) 20px 40px;
+  padding: calc(max(10vh, 64px) + 30px) 20px 40px;
   color: var(--ink);
 }
 
@@ -134,4 +134,49 @@
   border-radius: 15px;
   border: 2px solid var(--blush);
   z-index: 1;
+}
+
+/* ================= TABLET / MOBILE ================= */
+@media (max-width: 800px){
+  .branches-layout{
+    flex-direction: column;
+  }
+
+  .map-wrap{
+    order: -1; /* map first, list below */
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .map{
+    height: 45vh;
+    min-height: 280px;
+  }
+
+  .branch-list{
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+@media (max-width: 600px){
+  .branches-page{
+    padding: 84px 14px 30px;
+  }
+
+  .branches-page h1{
+    font-size: 28px;
+  }
+
+  .locate-btn{
+    width: 100%;
+  }
+
+  .locate-msg{
+    width: 100%;
+  }
 }
