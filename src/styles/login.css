@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #ffdbdb;
+    background-color: var(--blush);
 }
 
 .login fieldset{
@@ -13,14 +13,15 @@
     width: 500px;
     max-width: 90%;
     padding: 20px 40px 30px;
-    border: 2px solid #80665C;
+    border: 2px solid var(--burgundy);
     border-radius: 20px;
-    background-color: #FFF4DE;
+    background-color: var(--cream);
+    box-shadow: 0 8px 24px var(--shadow);
 }
 
 .login legend{
     font-size: 30px;
-    color: #59443C;
+    color: var(--burgundy);
     padding: 0 10px;
 }
 
@@ -29,8 +30,15 @@
     height: 40px;
     padding: 0 10px;
     font-size: 20px;
-    border: 1px solid lightpink;
+    color: var(--ink);
+    background-color: white;
+    border: 1px solid var(--blush);
     border-radius: 10px;
+}
+
+.login input:focus{
+    outline: none;
+    border-color: var(--rust);
 }
 
 .login .logbtn{
@@ -38,8 +46,8 @@
     width: 120px;
     height: 40px;
     margin-top: 10px;
-    background-color: lightpink;
-    color: #FFF4DE;
+    background-color: var(--burgundy);
+    color: var(--cream);
     border: none;
     border-radius: 40px;
     font-size: 20px;
@@ -47,10 +55,11 @@
 }
 
 .login .logbtn:hover{
-    background-color: #7f665c;
+    background-color: var(--rust);
 }
 
 .login .error{
-    color: crimson;
+    color: var(--burgundy);
+    font-weight: 600;
     font-size: 16px;
 }

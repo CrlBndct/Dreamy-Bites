@@ -8,14 +8,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  background-color: lightpink;
-  color: #59443C;
+  background-color: var(--blush);
+  box-shadow: 0 3px 10px var(--shadow);
+  color: var(--burgundy);
 }
 
 .baker-nav h1 small{
   font-size: 16px;
   margin-left: 10px;
-  color: #80665C;
+  color: var(--rust);
 }
 
 .baker-nav button,
@@ -24,19 +25,23 @@
 }
 
 .baker-nav button{
-  background: #7f665c;
-  color: #FFF4DE;
+  background: var(--burgundy);
+  color: var(--cream);
   border: none;
   border-radius: 20px;
   padding: 8px 16px;
   cursor: pointer;
 }
 
+.baker-nav button:hover{
+  background: var(--rust);
+}
+
 .baker-page{
   max-width: 900px;
   margin: 0 auto;
   padding: calc(10vh + 30px) 20px 60px;
-  color: #59443C;
+  color: var(--ink);
 }
 
 .stats{
@@ -49,14 +54,14 @@
 .stat{
   flex: 1;
   min-width: 150px;
-  background: #ffdbdb;
+  background: var(--blush);
   border-radius: 15px;
   padding: 15px;
   text-align: center;
 }
 
 .stat h2{
-  color: #7f665c;
+  color: var(--burgundy);
 }
 
 .tabs{
@@ -71,21 +76,25 @@
   border: none;
   border-radius: 30px;
   font-size: 18px;
-  background: #ffdbdb;
-  color: #7f665c;
+  background: var(--blush);
+  color: var(--burgundy);
   cursor: pointer;
 }
 
+.tab:hover{
+  background: var(--tan);
+}
+
 .tab.active{
-  background: #7f665c;
-  color: #FFF4DE;
+  background: var(--burgundy);
+  color: var(--cream);
 }
 
 .order-card,
 .product-row,
 .product-form{
-  background: #FFF4DE;
-  border: 1px solid lightpink;
+  background: var(--blush-soft);
+  border: 1px solid var(--blush);
   border-radius: 15px;
   padding: 15px;
   margin-bottom: 15px;
@@ -100,7 +109,7 @@
 }
 
 .order-customer{
-  color: #80665C;
+  color: var(--text-soft);
   margin-bottom: 8px;
 }
 
@@ -112,6 +121,8 @@
   padding: 6px;
   border-radius: 8px;
   margin-right: 8px;
+  color: var(--ink);
+  border: 1px solid var(--blush);
 }
 
 .product-form{
@@ -121,19 +132,31 @@
   margin-bottom: 30px;
 }
 
+.product-form h2{
+  color: var(--burgundy);
+}
+
 .product-form input,
 .product-form select{
   padding: 10px;
-  border: 1px solid lightpink;
+  border: 1px solid var(--blush);
   border-radius: 10px;
   font-size: 16px;
+  color: var(--ink);
+  background: white;
+}
+
+.product-form input:focus,
+.product-form select:focus{
+  outline: none;
+  border-color: var(--rust);
 }
 
 .product-form label{
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #80665C;
+  color: var(--text-soft);
 }
 
 .product-row{
@@ -155,6 +178,10 @@
   min-width: 150px;
 }
 
+.product-info p{
+  color: var(--text-soft);
+}
+
 .product-actions{
   display: flex;
   gap: 8px;
@@ -162,8 +189,8 @@
 }
 
 .baker-page button:not(.tab){
-  background: lightpink;
-  color: #59443C;
+  background: var(--blush);
+  color: var(--burgundy);
   border: none;
   border-radius: 20px;
   padding: 8px 14px;
@@ -171,18 +198,22 @@
 }
 
 .baker-page button.primary{
-  background: #7f665c;
-  color: #FFF4DE;
+  background: var(--burgundy);
+  color: var(--cream);
 }
 
 .baker-page button.danger{
-  background: #c0392b;
-  color: white;
+  background: var(--rust);
+  color: var(--cream);
+}
+
+.baker-page button:hover{
+  filter: brightness(0.92);
 }
 
 .badge{
-  background: crimson;
-  color: white;
+  background: var(--burgundy);
+  color: var(--cream);
   border-radius: 10px;
   padding: 2px 8px;
   font-size: 13px;
@@ -190,8 +221,8 @@
 
 /* ---- Sales tab ---- */
 .panel{
-  background: #FFF4DE;
-  border: 1px solid lightpink;
+  background: var(--blush-soft);
+  border: 1px solid var(--blush);
   border-radius: 15px;
   padding: 15px 20px;
   margin-bottom: 20px;
@@ -199,6 +230,7 @@
 
 .panel h2{
   margin-bottom: 15px;
+  color: var(--burgundy);
 }
 
 .chart{
@@ -222,19 +254,19 @@
   width: 100%;
   max-width: 50px;
   min-height: 2px;
-  background: #7f665c;
+  background: linear-gradient(to top, var(--burgundy), var(--rust));
   border-radius: 8px 8px 0 0;
 }
 
 .bar-value{
   font-size: 13px;
-  color: #7f665c;
+  color: var(--burgundy);
   min-height: 16px;
 }
 
 .bar-label{
   font-size: 14px;
-  color: #80665C;
+  color: var(--text-soft);
 }
 
 .sales-table{
@@ -246,5 +278,9 @@
 .sales-table td{
   text-align: left;
   padding: 10px 8px;
-  border-bottom: 1px solid lightpink;
+  border-bottom: 1px solid var(--blush);
+}
+
+.sales-table th{
+  color: var(--burgundy);
 }

@@ -2,7 +2,11 @@
   max-width: 800px;
   margin: 0 auto;
   padding: calc(10vh + 30px) 20px 40px;
-  color: #80665C;
+  color: var(--ink);
+}
+
+.cart-page h1{
+  color: var(--burgundy);
 }
 
 .cart-item{
@@ -10,7 +14,7 @@
   align-items: center;
   gap: 20px;
   padding: 15px 0;
-  border-bottom: 1px solid lightpink;
+  border-bottom: 1px solid var(--blush);
 }
 
 .cart-item img{
@@ -24,6 +28,10 @@
   flex: 1;
 }
 
+.cart-info p{
+  color: var(--text-soft);
+}
+
 .cart-qty{
   display: flex;
   align-items: center;
@@ -31,8 +39,8 @@
 }
 
 .cart-qty button, .remove{
-  background: lightpink;
-  color: #FFF4DE;
+  background: var(--burgundy);
+  color: var(--cream);
   border: none;
   border-radius: 50%;
   width: 30px;
@@ -40,16 +48,29 @@
   cursor: pointer;
 }
 
+.cart-qty button:hover{
+  background: var(--rust);
+}
+
+.remove{
+  background: var(--rust);
+}
+
+.remove:hover{
+  background: var(--burgundy);
+}
+
 .cart-total{
   text-align: right;
   margin-top: 20px;
+  color: var(--burgundy);
 }
 
 .checkout{
   display: block;
   margin-left: auto;
-  background: lightpink;
-  color: #FFF4DE;
+  background: var(--burgundy);
+  color: var(--cream);
   border: none;
   border-radius: 40px;
   padding: 10px 30px;
@@ -57,8 +78,12 @@
   cursor: pointer;
 }
 
+.checkout:hover{
+  background: var(--rust);
+}
+
 .cart-link{
-  color: #80665C;
+  color: var(--burgundy);
 }
 
 /* ---- Checkout form ---- */
@@ -68,9 +93,13 @@
   gap: 14px;
   margin-top: 30px;
   padding: 20px;
-  background: #FFF4DE;
-  border: 1px solid lightpink;
+  background: var(--blush-soft);
+  border: 1px solid var(--blush);
   border-radius: 15px;
+}
+
+.checkout-form h2{
+  color: var(--burgundy);
 }
 
 .checkout-form input,
@@ -80,9 +109,17 @@
   padding: 10px;
   font-size: 16px;
   font-family: inherit;
-  color: #59443C;
-  border: 1px solid lightpink;
+  color: var(--ink);
+  background: white;
+  border: 1px solid var(--blush);
   border-radius: 10px;
+}
+
+.checkout-form input:focus,
+.checkout-form select:focus,
+.checkout-form textarea:focus{
+  outline: none;
+  border-color: var(--rust);
 }
 
 .type-options{
@@ -99,21 +136,25 @@
   gap: 4px;
   padding: 12px;
   text-align: left;
-  color: #80665C;
+  color: var(--text-soft);
   background: white;
-  border: 2px solid lightpink;
+  border: 2px solid var(--blush);
   border-radius: 12px;
   cursor: pointer;
 }
 
+.type-card:hover{
+  border-color: var(--tan);
+}
+
 .type-card.active{
-  background: #ffdbdb;
-  border-color: #7f665c;
+  background: var(--blush);
+  border-color: var(--burgundy);
 }
 
 .type-card strong{
   font-size: 18px;
-  color: #59443C;
+  color: var(--burgundy);
 }
 
 .field-row{
@@ -142,6 +183,7 @@
 
 .choice-row input{
   width: auto;
+  accent-color: var(--burgundy);
 }
 
 .summary p{
@@ -152,10 +194,12 @@
 
 .summary .hint{
   font-size: 14px;
+  color: var(--text-soft);
 }
 
 .form-error{
-  color: crimson;
+  color: var(--burgundy);
+  font-weight: 600;
 }
 
 /* ---- Order type tag (used on the baker dashboard) ---- */
@@ -168,14 +212,14 @@
   border-radius: 10px;
 }
 
-.type-tag.pickup{ background: #2e8b57; }
-.type-tag.delivery{ background: #2563eb; }
-.type-tag.dine-in{ background: #b9770e; }
+.type-tag.pickup{ background: #2E7D5B; }
+.type-tag.delivery{ background: var(--burgundy); }
+.type-tag.dine-in{ background: var(--rust); }
 
 .order-details{
   margin: 6px 0 8px;
   font-size: 15px;
-  color: #80665C;
+  color: var(--text-soft);
 }
 
 .order-details p{
