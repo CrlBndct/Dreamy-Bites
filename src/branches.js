@@ -1,0 +1,35 @@
+export const branches = [
+  {
+    id: 1,
+    name: 'Dreamy Bites - Santa Cruz',
+    address: 'Santa Cruz, Laguna',
+    phone: '0917 000 0001',
+    lat: 14.2813,
+    lng: 121.4164,
+    open: '08:00',
+    close: '19:00',
+    available: true,
+  },
+  {
+    id: 2,
+    name: 'Dreamy Bites - Calamba',
+    address: 'Calamba, Laguna',
+    phone: '0917 000 0002',
+    lat: 14.2117,
+    lng: 121.1653,
+    open: '07:00',
+    close: '20:00',
+    available: true,
+  },
+  {
+    id: 3,
+    name: 'Dreamy Bites - Santa Rosa',
+    address: 'Santa Rosa, Laguna',
+    phone: '0917 000 0003',
+    lat: 14.3122,
+    lng: 121.1114,
+    open: '09:00',
+    close: '18:00',
+    available: false, // temporarily closed
+  },
+];

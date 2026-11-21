@@ -1,28 +1,82 @@
-import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom";
-import { foodArray } from "..\\foods";
-import "..\\styles\\foodpage.css"
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useProducts } from '../ProductsContext';
+import { useCart } from '../CartContext';
+import StarRating from '../StarRating';
+import { useRatings } from '../useRatings';
+import '../styles/foodpage.css';
 
-function MainPage(){
+export default function FoodPage() {
+  const { item } = useParams();
+  const navigate = useNavigate();
 
-}
+  const { addToCart, totalItems } = useCart();
+  const { products } = useProducts();
+  const { ratings, rate } = useRatings();
+  const [qty, setQty] = useState(1);
 
-export default function FoodPage(){
-    let {item} = useParams();
+  const food = products.find((f) => f.foodId === Number(item));
 
-    let findItems = foodArray.filter((food) => food.foodId == item);
-    return(
-        <>
-            <div className="nav">
-                <h1 style={{color: "#80665C"}}>Dreamy Bites</h1>
-                <Link to = "/#menu" className="backHomeBtn">Home</Link>
+  // rating math (safe if rating fields are missing)
+  const myRating = food ? ratings[food.foodId] || 0 : 0;
+  const baseCount = food?.ratingCount || 0;
+  const baseRating = food?.rating || 0;
+  const votes = food ? baseCount + (myRating ? 1 : 0) : 0;
+  const average = votes ? (baseRating * baseCount + myRating) / votes : 0;
+
+  const handleAdd = () => {
+    addToCart(food, qty);
+    navigate('/cart');
+  };
+
+  return (
+    <>
+      <div className="nav">
+        <h1 style={{ color: '#80665C' }}>Dreamy Bites</h1>
+        <Link to="/homepage" className="backHomeBtn">Home</Link>
+        <Link to="/cart" className="cart">Basket ({totalItems})</Link>
+      </div>
+
+      {!food ? (
+        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>Item not found.</h2>
+      ) : (
+        <div className="container">
+          <img src={food.pic} alt={food.foodName} className="foodImg" />
+
+          <div className="details">
+            <h1 className="proName">{food.foodName}</h1>
+            <h2 className="desc">{food.foodDes}</h2>
+
+            <div className="rating-box">
+              <StarRating value={Math.round(average)} readOnly />
+              <span className="rating-text">{average.toFixed(1)} ({votes} ratings)</span>
             </div>
-            
-            {findItems.map((item) =><div className="container" key = {item.foodId}> 
-                <img src = {item.pic} alt="image" className="foodImg"/>
-                <h1 className="proName">{item.foodName}</h1>
-                <h2 className="desc">{item.foodDes}</h2>
-                <button className="addToCart">Add To Cart</button>
-            </div>)}
-        </>
-    );
+
+            <div className="my-rating">
+              <span>{myRating ? 'Your rating:' : 'Rate this item:'}</span>
+              <StarRating value={myRating} onChange={(stars) => rate(food.foodId, stars)} />
+            </div>
+
+            <div className="buy-row">
+              <span className="pricing">Php {food.price * qty}</span>
+
+              <div className="qty-box">
+                <button className="subtract" onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
+                <span className="quantity">{qty}</span>
+                <button className="add" onClick={() => setQty((q) => q + 1)}>+</button>
+              </div>
+
+              <button
+                className="addToCart"
+                onClick={handleAdd}
+                disabled={food.available === false}
+              >
+                {food.available === false ? 'Sold out' : 'Add To My Basket'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

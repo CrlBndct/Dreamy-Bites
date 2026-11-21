@@ -1,0 +1,250 @@
+.baker-nav{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 10vh;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  background-color: lightpink;
+  color: #59443C;
+}
+
+.baker-nav h1 small{
+  font-size: 16px;
+  margin-left: 10px;
+  color: #80665C;
+}
+
+.baker-nav button,
+.baker-user{
+  margin-left: 12px;
+}
+
+.baker-nav button{
+  background: #7f665c;
+  color: #FFF4DE;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.baker-page{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: calc(10vh + 30px) 20px 60px;
+  color: #59443C;
+}
+
+.stats{
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.stat{
+  flex: 1;
+  min-width: 150px;
+  background: #ffdbdb;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+}
+
+.stat h2{
+  color: #7f665c;
+}
+
+.tabs{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tab{
+  padding: 10px 25px;
+  border: none;
+  border-radius: 30px;
+  font-size: 18px;
+  background: #ffdbdb;
+  color: #7f665c;
+  cursor: pointer;
+}
+
+.tab.active{
+  background: #7f665c;
+  color: #FFF4DE;
+}
+
+.order-card,
+.product-row,
+.product-form{
+  background: #FFF4DE;
+  border: 1px solid lightpink;
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.order-head,
+.order-foot{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.order-customer{
+  color: #80665C;
+  margin-bottom: 8px;
+}
+
+.order-card ul{
+  margin: 8px 0 12px 20px;
+}
+
+.order-foot select{
+  padding: 6px;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.product-form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.product-form input,
+.product-form select{
+  padding: 10px;
+  border: 1px solid lightpink;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.product-form label{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #80665C;
+}
+
+.product-row{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.product-row img{
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product-info{
+  flex: 1;
+  min-width: 150px;
+}
+
+.product-actions{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.baker-page button:not(.tab){
+  background: lightpink;
+  color: #59443C;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.baker-page button.primary{
+  background: #7f665c;
+  color: #FFF4DE;
+}
+
+.baker-page button.danger{
+  background: #c0392b;
+  color: white;
+}
+
+.badge{
+  background: crimson;
+  color: white;
+  border-radius: 10px;
+  padding: 2px 8px;
+  font-size: 13px;
+}
+
+/* ---- Sales tab ---- */
+.panel{
+  background: #FFF4DE;
+  border: 1px solid lightpink;
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+}
+
+.panel h2{
+  margin-bottom: 15px;
+}
+
+.chart{
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 220px;
+}
+
+.bar-col{
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+}
+
+.bar{
+  width: 100%;
+  max-width: 50px;
+  min-height: 2px;
+  background: #7f665c;
+  border-radius: 8px 8px 0 0;
+}
+
+.bar-value{
+  font-size: 13px;
+  color: #7f665c;
+  min-height: 16px;
+}
+
+.bar-label{
+  font-size: 14px;
+  color: #80665C;
+}
+
+.sales-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th,
+.sales-table td{
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid lightpink;
+}
