@@ -1,6 +1,6 @@
 export let foodArray = [
   {
-    pic: "/src/assets/ChocolateCake.jpg",
+    pic: "./assets/ChocolateCake.jpg",
     foodId: 123,
     foodName: "Chocolate Cake",
     foodDes: "A cake that has a chocolate flavor in it",
@@ -11,7 +11,7 @@ export let foodArray = [
     available: true
   },
   {
-    pic: "/src/assets/Ensaymada.jpg",
+    pic: "./assets/Ensaymada.jpg",
     foodId: 456,
     foodName: "Ensaymada",
     foodDes: "A filipino bread with sugar and butter as its flavor",
@@ -22,7 +22,7 @@ export let foodArray = [
     available: true
   },
   {
-    pic: "/src/assets/Pandesal.jpg",
+    pic: "./assets/Pandesal.jpg",
     foodId: 789,
     foodName: "Pandesal",
     foodDes: "A filipino popular breakfast, best when dipped in coffee",
@@ -33,7 +33,7 @@ export let foodArray = [
     available: true
   },
   {
-    pic: "/src/assets/Coke.jpg",
+    pic: "./assets/Coke.jpg",
     foodId: 101,
     foodName: "Coke",
     foodDes: "A very satisfying drink for your craves",
@@ -44,3 +44,4 @@ export let foodArray = [
     available: true
   }
 ];
+
