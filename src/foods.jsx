@@ -1,6 +1,11 @@
+import ChocolateCake from "./assets/ChocolateCake.jpg";
+import Ensaymada from "./assets/Ensaymada.jpg";
+import Pandesal from "./assets/Pandesal.jpg";
+import Coke from "./assets/Coke.jpg";
+
 export let foodArray = [
   {
-    pic: "./assets/ChocolateCake.jpg",
+    pic: ChocolateCake,
     foodId: 123,
     foodName: "Chocolate Cake",
     foodDes: "A cake that has a chocolate flavor in it",
@@ -11,7 +16,7 @@ export let foodArray = [
     available: true
   },
   {
-    pic: "./assets/Ensaymada.jpg",
+    pic: Ensaymada,
     foodId: 456,
     foodName: "Ensaymada",
     foodDes: "A filipino bread with sugar and butter as its flavor",
@@ -22,7 +27,7 @@ export let foodArray = [
     available: true
   },
   {
-    pic: "./assets/Pandesal.jpg",
+    pic: Pandesal,
     foodId: 789,
     foodName: "Pandesal",
     foodDes: "A filipino popular breakfast, best when dipped in coffee",
@@ -33,7 +38,7 @@ export let foodArray = [
     available: true
   },
   {
-    pic: "./assets/Coke.jpg",
+    pic: Coke,
     foodId: 101,
     foodName: "Coke",
     foodDes: "A very satisfying drink for your craves",
@@ -44,4 +49,3 @@ export let foodArray = [
     available: true
   }
 ];
-
