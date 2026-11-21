@@ -62,6 +62,7 @@
 .tabs{
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 
@@ -128,6 +129,13 @@
   font-size: 16px;
 }
 
+.product-form label{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #80665C;
+}
+
 .product-row{
   display: flex;
   align-items: center;
@@ -178,4 +186,65 @@
   border-radius: 10px;
   padding: 2px 8px;
   font-size: 13px;
+}
+
+/* ---- Sales tab ---- */
+.panel{
+  background: #FFF4DE;
+  border: 1px solid lightpink;
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin-bottom: 20px;
+}
+
+.panel h2{
+  margin-bottom: 15px;
+}
+
+.chart{
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 220px;
+}
+
+.bar-col{
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+}
+
+.bar{
+  width: 100%;
+  max-width: 50px;
+  min-height: 2px;
+  background: #7f665c;
+  border-radius: 8px 8px 0 0;
+}
+
+.bar-value{
+  font-size: 13px;
+  color: #7f665c;
+  min-height: 16px;
+}
+
+.bar-label{
+  font-size: 14px;
+  color: #80665C;
+}
+
+.sales-table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th,
+.sales-table td{
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px solid lightpink;
 }

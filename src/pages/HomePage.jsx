@@ -56,6 +56,7 @@ export default function HomePage() {
 
         <div className="nav-right">
           {user?.role === 'baker' && <Link to="/baker">Dashboard</Link>}
+          <Link to="/branches">Branches</Link>
           <Link to="/cart">Basket ({totalItems})</Link>
           <button className="logout-btn" onClick={handleLogout}>Log out</button>
         </div>
