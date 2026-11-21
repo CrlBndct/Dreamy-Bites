@@ -28,6 +28,10 @@ body{
   color: var(--ink);
 }
 
+img{
+  max-width: 100%;
+}
+
 /* ------ Navigation Bar ------- */
 .nav-bar{
   position: fixed;
@@ -316,15 +320,228 @@ body{
   font-size: 20px;
 }
 
-/* ------ Basic mobile support ------- */
-@media (max-width: 800px){
-  .nav-bar > ul{ display: none; }
-  .nav-right{ gap: 10px; }
-  .nav-right a{ font-size: 16px; }
-  .text{ left: 20px; right: 20px; top: 120px; }
-  .text > h1{ font-size: 36px; width: 100%; }
-  .text > h3{ width: 100%; }
-  .btn1{ left: 40px; top: 420px; }
-  .menu > h1, .filter{ left: 20px; }
-  .item{ left: 0; width: 90%; margin: 20px auto; }
+/* =====================================================
+   TABLET (up to 1150px): intro flows instead of floating
+   ===================================================== */
+@media (max-width: 1150px){
+  .nav-bar > ul{
+    display: none; /* would overlap the logo and the links */
+  }
+
+  .intro-sec{
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 150px 60px 60px;
+  }
+
+  .text{
+    position: static;
+  }
+
+  .text > h1{
+    font-size: 48px;
+    width: 100%;
+  }
+
+  .text > h3{
+    width: 100%;
+  }
+
+  .btn1{
+    position: static;
+    margin: 20px 10px 0;
+  }
+}
+
+/* =====================================================
+   MOBILE (up to 900px)
+   ===================================================== */
+@media (max-width: 900px){
+  body{
+    overflow-x: hidden;
+  }
+
+  /* two-row navbar: logo on top, links below */
+  .nav-bar{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px 0;
+    height: auto;
+    padding: 8px 12px;
+    background-color: var(--blush);
+    box-shadow: 0 3px 10px var(--shadow);
+  }
+
+  .logo-name,
+  .logo-name2{
+    position: static;
+    margin: 0;
+    font-size: 22px;
+    padding: 4px 8px;
+  }
+
+  .logo-name2{
+    padding-left: 6px;
+  }
+
+  .nav-right{
+    position: static;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+  }
+
+  .nav-right a{
+    font-size: 15px;
+  }
+
+  .logout-btn{
+    font-size: 15px;
+    padding: 5px 12px;
+  }
+
+  /* intro */
+  .intro-sec{
+    min-height: 90vh;
+    padding: 120px 20px 40px;
+  }
+
+  .text > h1{
+    font-size: 34px;
+  }
+
+  .text > h3{
+    font-size: 16px;
+  }
+
+  .btn1{
+    width: 170px;
+    height: 46px;
+    margin: 20px 10px 0;
+  }
+
+  /* menu: one column of cards */
+  .menu{
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 16px 60px;
+  }
+
+  .menu > h1{
+    position: static;
+    align-self: flex-start;
+    font-size: 36px;
+    margin: 0 0 10px;
+  }
+
+  .filter{
+    position: static;
+    align-self: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+
+  .filter > .categ{
+    margin: 0;
+  }
+
+  .catBtn{
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .item{
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 440px;
+    height: auto;
+    margin: 12px 0;
+    padding-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .item:hover{
+    top: 0;
+  }
+
+  .item > img,
+  .item > h1,
+  .item > h3{
+    flex: 0 0 100%;
+  }
+
+  .item > img{
+    height: 220px;
+  }
+
+  .item > h1{
+    font-size: 26px;
+    margin-top: 10px;
+  }
+
+  .item > h3{
+    font-size: 16px;
+    margin-top: 6px;
+  }
+
+  .item > h2{
+    position: static;
+    flex: 1;
+    margin: 14px 20px 0;
+    font-size: 22px;
+  }
+
+  .view{
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 14px 20px 0 0;
+    padding: 8px 24px;
+    font-size: 20px;
+  }
+
+  #about{
+    padding: 40px 16px !important; /* the padding is inline in HomePage.jsx */
+  }
+
+  #about > h1{
+    font-size: 34px;
+  }
+
+  #about > p{
+    font-size: 17px;
+  }
+
+  #menu, #about, #intro-sec{
+    scroll-margin-top: 100px;
+  }
+}
+
+/* ---- very small phones ---- */
+@media (max-width: 400px){
+  .logo-name,
+  .logo-name2{
+    font-size: 19px;
+  }
+
+  .text > h1{
+    font-size: 30px;
+  }
+
+  .nav-right{
+    gap: 6px 10px;
+  }
 }
