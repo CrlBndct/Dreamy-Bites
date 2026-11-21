@@ -5,8 +5,10 @@ import { useProducts } from '../ProductsContext';
 import { useOrders, STATUSES } from '../OrdersContext';
 import BranchesManager from './BranchesManager';
 import '../styles/baker.css';
+import '../styles/cart.css'; // order type tags
 
 const EMPTY = { foodName: '', foodDes: '', price: '', category: 'Pastry', pic: '' };
+const TYPE_FILTERS = ['All', 'Pickup', 'Delivery', 'Dine-in'];
 
 export default function BakerPage() {
   const navigate = useNavigate();
@@ -15,8 +17,11 @@ export default function BakerPage() {
   const { orders, updateStatus, deleteOrder } = useOrders();
 
   const [tab, setTab] = useState('orders');
+  const [typeFilter, setTypeFilter] = useState('All');
   const [form, setForm] = useState(EMPTY);
   const [editingId, setEditingId] = useState(null);
+
+  const shownOrders = orders.filter((o) => typeFilter === 'All' || o.type === typeFilter);
 
   /* ---------- sales calculations ---------- */
   const completed = orders.filter((o) => o.status === 'Completed');
@@ -131,16 +136,46 @@ export default function BakerPage() {
         {/* ---------- ORDERS ---------- */}
         {tab === 'orders' && (
           <>
-            {orders.length === 0 && <p>No orders yet.</p>}
+            <div className="tabs">
+              {TYPE_FILTERS.map((t) => (
+                <button
+                  key={t}
+                  className={typeFilter === t ? 'tab active' : 'tab'}
+                  onClick={() => setTypeFilter(t)}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
 
-            {orders.map((o) => (
+            {shownOrders.length === 0 && <p>No orders yet.</p>}
+
+            {shownOrders.map((o) => (
               <div className="order-card" key={o.id}>
                 <div className="order-head">
-                  <strong>Order #{String(o.id).slice(-5)}</strong>
+                  <span>
+                    <strong>Order #{String(o.id).slice(-5)}</strong>
+                    {o.type && (
+                      <span className={`type-tag ${o.type.toLowerCase()}`}>{o.type}</span>
+                    )}
+                  </span>
                   <span>{o.date}</span>
                 </div>
 
-                <p className="order-customer">{o.customer}</p>
+                <p className="order-customer">{o.name ? `${o.name} · ${o.phone}` : o.customer}</p>
+
+                {o.type && (
+                  <div className="order-details">
+                    {o.type === 'Delivery' ? (
+                      <p><strong>Deliver to:</strong> {o.address}</p>
+                    ) : (
+                      <p><strong>Branch:</strong> {o.branchName}</p>
+                    )}
+                    <p><strong>When:</strong> {o.when}</p>
+                    <p><strong>Payment:</strong> {o.payment}</p>
+                    {o.notes && <p><strong>Notes:</strong> {o.notes}</p>}
+                  </div>
+                )}
 
                 <ul>
                   {o.items.map((i, idx) => (
@@ -151,7 +186,10 @@ export default function BakerPage() {
                 </ul>
 
                 <div className="order-foot">
-                  <strong>Total: Php {o.total}</strong>
+                  <strong>
+                    Total: Php {o.total}
+                    {o.fee > 0 && ` (incl. Php ${o.fee} delivery)`}
+                  </strong>
                   <div>
                     <select value={o.status} onChange={(e) => updateStatus(o.id, e.target.value)}>
                       {STATUSES.map((s) => (

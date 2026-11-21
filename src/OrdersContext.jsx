@@ -19,13 +19,14 @@ export function OrdersProvider({ children }) {
     try { localStorage.setItem(KEY, JSON.stringify(orders)); } catch {}
   }, [orders]);
 
-  const placeOrder = ({ customer, items, total }) =>
+  // details can include: customer, name, phone, type, branchName, address,
+  // when, payment, notes, subtotal, fee, total
+  const placeOrder = ({ items, ...details }) =>
     setOrders((prev) => [
       {
         id: Date.now(),
-        customer,
+        ...details,
         items: items.map((i) => ({ name: i.foodName, qty: i.quantity, price: i.price })),
-        total,
         status: 'Pending',
         date: new Date().toLocaleString(),
       },

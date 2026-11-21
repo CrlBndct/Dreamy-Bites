@@ -60,3 +60,124 @@
 .cart-link{
   color: #80665C;
 }
+
+/* ---- Checkout form ---- */
+.checkout-form{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 30px;
+  padding: 20px;
+  background: #FFF4DE;
+  border: 1px solid lightpink;
+  border-radius: 15px;
+}
+
+.checkout-form input,
+.checkout-form select,
+.checkout-form textarea{
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-family: inherit;
+  color: #59443C;
+  border: 1px solid lightpink;
+  border-radius: 10px;
+}
+
+.type-options{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.type-card{
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  text-align: left;
+  color: #80665C;
+  background: white;
+  border: 2px solid lightpink;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.type-card.active{
+  background: #ffdbdb;
+  border-color: #7f665c;
+}
+
+.type-card strong{
+  font-size: 18px;
+  color: #59443C;
+}
+
+.field-row{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.field-row input{
+  flex: 1;
+  min-width: 200px;
+}
+
+.choice-row{
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.choice-row label{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.choice-row input{
+  width: auto;
+}
+
+.summary p{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.summary .hint{
+  font-size: 14px;
+}
+
+.form-error{
+  color: crimson;
+}
+
+/* ---- Order type tag (used on the baker dashboard) ---- */
+.type-tag{
+  display: inline-block;
+  padding: 2px 10px;
+  margin-left: 8px;
+  font-size: 13px;
+  color: white;
+  border-radius: 10px;
+}
+
+.type-tag.pickup{ background: #2e8b57; }
+.type-tag.delivery{ background: #2563eb; }
+.type-tag.dine-in{ background: #b9770e; }
+
+.order-details{
+  margin: 6px 0 8px;
+  font-size: 15px;
+  color: #80665C;
+}
+
+.order-details p{
+  margin-top: 2px;
+}

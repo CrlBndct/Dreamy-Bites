@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from 'react';
 const AuthContext = createContext();
 
 // DEMO ONLY: anyone can read these in the browser. Use a real backend later.
-const BAKER = { email: 'baker@dreamybites.com', password: 'baker123' };
+const BAKER = { email: 'baker@dreamybites.com', password: 'baker123'};
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
