@@ -2,7 +2,11 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: calc(10vh + 30px) 20px 40px;
-  color: #59443C;
+  color: var(--ink);
+}
+
+.branches-page h1{
+  color: var(--burgundy);
 }
 
 .locate-row{
@@ -14,8 +18,8 @@
 }
 
 .locate-btn{
-  background: #7f665c;
-  color: #FFF4DE;
+  background: var(--burgundy);
+  color: var(--cream);
   border: none;
   border-radius: 30px;
   padding: 10px 24px;
@@ -23,17 +27,22 @@
   cursor: pointer;
 }
 
+.locate-btn:hover:not(:disabled){
+  background: var(--rust);
+}
+
 .locate-btn:disabled{
-  background: gray;
+  background: #B9A3A0;
   cursor: wait;
 }
 
 .locate-msg{
-  color: #80665C;
+  color: var(--text-soft);
 }
 
 .locate-msg.good{
-  background: #ffdbdb;
+  background: var(--blush);
+  color: var(--ink);
   padding: 8px 14px;
   border-radius: 12px;
 }
@@ -55,27 +64,40 @@
 }
 
 .branch-card{
-  background: #FFF4DE;
-  border: 2px solid lightpink;
+  background: var(--blush-soft);
+  border: 2px solid var(--blush);
   border-radius: 15px;
   padding: 14px;
   cursor: pointer;
 }
 
+.branch-card:hover{
+  border-color: var(--tan);
+}
+
 .branch-card.selected{
-  border-color: #7f665c;
-  background: #ffdbdb;
+  border-color: var(--burgundy);
+  background: var(--blush);
+}
+
+.branch-card h3{
+  color: var(--burgundy);
 }
 
 .branch-card p{
   margin-top: 4px;
-  color: #80665C;
+  color: var(--text-soft);
 }
 
 .branch-card a{
   display: inline-block;
   margin-top: 8px;
-  color: #7f665c;
+  color: var(--burgundy);
+  font-weight: 600;
+}
+
+.branch-card a:hover{
+  color: var(--rust);
 }
 
 .branch-top{
@@ -87,6 +109,7 @@
 
 .dist{
   font-weight: bold;
+  color: var(--ink);
 }
 
 .tag{
@@ -97,8 +120,8 @@
   white-space: nowrap;
 }
 
-.tag.open{ background: #2e8b57; }
-.tag.closed{ background: #c0392b; }
+.tag.open{ background: #2E7D5B; }
+.tag.closed{ background: var(--burgundy); }
 
 .map-wrap{
   flex: 2;
@@ -109,5 +132,6 @@
   height: 70vh;
   width: 100%;
   border-radius: 15px;
+  border: 2px solid var(--blush);
   z-index: 1;
 }
