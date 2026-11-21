@@ -14,9 +14,7 @@ export function useRatings() {
   const rate = (foodId, stars) => {
     setRatings((prev) => {
       const next = { ...prev, [foodId]: stars };
-      try {
-        localStorage.setItem(KEY, JSON.stringify(next));
-      } catch {}
+      try { localStorage.setItem(KEY, JSON.stringify(next)); } catch {}
       return next;
     });
   };

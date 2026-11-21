@@ -1,13 +1,23 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../CartContext';
+import { useOrders } from '../OrdersContext';
+import { useAuth } from '../AuthContext';
+import '../styles/foodpage.css'; // styles the .nav header
 import '../styles/cart.css';
 
 export default function Cart() {
+  const navigate = useNavigate();
   const { cart, updateQty, removeItem, clearCart, totalPrice } = useCart();
+  const { placeOrder } = useOrders();
+  const { user } = useAuth();
 
   const handleCheckout = () => {
+    if (!user || cart.length === 0) return;
+
+    placeOrder({ customer: user.email, items: cart, total: totalPrice });
     alert('Thank you for your order! 🍰');
     clearCart();
+    navigate('/homepage');
   };
 
   return (
@@ -23,23 +33,27 @@ export default function Cart() {
         {cart.length === 0 ? (
           <>
             <p>Your basket is empty.</p>
-            <Link to="/homepage#menu" className="cart-link">Browse the menu</Link>
+            <Link to="/homepage" className="cart-link">Browse the menu</Link>
           </>
         ) : (
           <>
             {cart.map((i) => (
               <div className="cart-item" key={i.foodId}>
                 <img src={i.pic} alt={i.foodName} />
+
                 <div className="cart-info">
                   <h2>{i.foodName}</h2>
                   <p>Php {i.price} each</p>
                 </div>
+
                 <div className="cart-qty">
                   <button onClick={() => updateQty(i.foodId, i.quantity - 1)}>-</button>
                   <span>{i.quantity}</span>
                   <button onClick={() => updateQty(i.foodId, i.quantity + 1)}>+</button>
                 </div>
+
                 <h3>Php {i.price * i.quantity}</h3>
+
                 <button className="remove" onClick={() => removeItem(i.foodId)}>✕</button>
               </div>
             ))}

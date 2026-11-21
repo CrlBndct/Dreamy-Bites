@@ -1,5 +1,3 @@
-import { useRef } from "react";
-
 export let foodArray = [
   {
     pic: "/src/assets/ChocolateCake.jpg",
@@ -8,10 +6,10 @@ export let foodArray = [
     foodDes: "A cake that has a chocolate flavor in it",
     price: 400,
     category: "Pastry",
-    quantity: 0,
-    rating: 4.5,       // starting average
-    ratingCount: 20
-  }, 
+    rating: 4.5,
+    ratingCount: 20,
+    available: true
+  },
   {
     pic: "/src/assets/Ensaymada.jpg",
     foodId: 456,
@@ -19,8 +17,10 @@ export let foodArray = [
     foodDes: "A filipino bread with sugar and butter as its flavor",
     price: 25,
     category: "Pastry",
-    quantity: 0, 
-  }, 
+    rating: 4.2,
+    ratingCount: 35,
+    available: true
+  },
   {
     pic: "/src/assets/Pandesal.jpg",
     foodId: 789,
@@ -28,9 +28,9 @@ export let foodArray = [
     foodDes: "A filipino popular breakfast, best when dipped in coffee",
     price: 5,
     category: "Pastry",
-    quantity: 0, 
-    rating: 4.5,       // starting average
-    ratingCount: 20
+    rating: 4.8,
+    ratingCount: 50,
+    available: true
   },
   {
     pic: "/src/assets/Coke.jpg",
@@ -39,9 +39,8 @@ export let foodArray = [
     foodDes: "A very satisfying drink for your craves",
     price: 25,
     category: "Beverage",
-    quantity: 0, 
-    rating: 4.5,       // starting average
-    ratingCount: 20
-  },
-  
+    rating: 4.0,
+    ratingCount: 15,
+    available: true
+  }
 ];

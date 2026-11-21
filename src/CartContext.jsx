@@ -21,7 +21,7 @@ export function CartProvider({ children }) {
     setCart((prev) =>
       prev
         .map((i) => (i.foodId === id ? { ...i, quantity: qty } : i))
-        .filter((i) => i.quantity > 0) // removes item if it hits 0
+        .filter((i) => i.quantity > 0)
     );
   };
 

@@ -1,6 +1,6 @@
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { foodArray } from '../foods';
+import { useProducts } from '../ProductsContext';
 import { useCart } from '../CartContext';
 import StarRating from '../StarRating';
 import { useRatings } from '../useRatings';
@@ -9,16 +9,20 @@ import '../styles/foodpage.css';
 export default function FoodPage() {
   const { item } = useParams();
   const navigate = useNavigate();
-  const { addToCart, totalItems } = useCart();
-  const [qty, setQty] = useState(1);
-  const { ratings, rate } = useRatings();
 
-  const food = foodArray.find((f) => f.foodId === Number(item));
+  const { addToCart, totalItems } = useCart();
+  const { products } = useProducts();
+  const { ratings, rate } = useRatings();
+  const [qty, setQty] = useState(1);
+
+  const food = products.find((f) => f.foodId === Number(item));
+
+  // rating math (safe if rating fields are missing)
   const myRating = food ? ratings[food.foodId] || 0 : 0;
-  const average = food
-    ? (food.rating * food.ratingCount + myRating) / (food.ratingCount + (myRating ? 1 : 0))
-    : 0;
-  const votes = food ? food.ratingCount + (myRating ? 1 : 0) : 0;
+  const baseCount = food?.ratingCount || 0;
+  const baseRating = food?.rating || 0;
+  const votes = food ? baseCount + (myRating ? 1 : 0) : 0;
+  const average = votes ? (baseRating * baseCount + myRating) / votes : 0;
 
   const handleAdd = () => {
     addToCart(food, qty);
@@ -34,28 +38,43 @@ export default function FoodPage() {
       </div>
 
       {!food ? (
-        <h2 style={{ textAlign: 'center' }}>Item not found.</h2>
+        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>Item not found.</h2>
       ) : (
         <div className="container">
           <img src={food.pic} alt={food.foodName} className="foodImg" />
-          <h1 className="proName">{food.foodName}</h1>
-          <h2 className="desc">{food.foodDes}</h2>
-          <div className="rating-box">
-            <StarRating value={Math.round(average)} readOnly />
-            <span className="rating-text">{average.toFixed(1)} ({votes} ratings)</span>
+
+          <div className="details">
+            <h1 className="proName">{food.foodName}</h1>
+            <h2 className="desc">{food.foodDes}</h2>
+
+            <div className="rating-box">
+              <StarRating value={Math.round(average)} readOnly />
+              <span className="rating-text">{average.toFixed(1)} ({votes} ratings)</span>
+            </div>
+
+            <div className="my-rating">
+              <span>{myRating ? 'Your rating:' : 'Rate this item:'}</span>
+              <StarRating value={myRating} onChange={(stars) => rate(food.foodId, stars)} />
+            </div>
+
+            <div className="buy-row">
+              <span className="pricing">Php {food.price * qty}</span>
+
+              <div className="qty-box">
+                <button className="subtract" onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
+                <span className="quantity">{qty}</span>
+                <button className="add" onClick={() => setQty((q) => q + 1)}>+</button>
+              </div>
+
+              <button
+                className="addToCart"
+                onClick={handleAdd}
+                disabled={food.available === false}
+              >
+                {food.available === false ? 'Sold out' : 'Add To My Basket'}
+              </button>
+            </div>
           </div>
-
-          <div className="my-rating">
-            <span>{myRating ? 'Your rating:' : 'Rate this item:'}</span>
-            <StarRating value={myRating} onChange={(stars) => rate(food.foodId, stars)} />
-          </div>
-
-          <button className="subtract" onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
-          <span className="quantity">{qty}</span>
-          <button className="add" onClick={() => setQty((q) => q + 1)}>+</button>
-
-          <button className="addToCart" onClick={handleAdd}>Add To My Basket</button>
-          <span className="pricing">Php {food.price * qty}</span>
         </div>
       )}
     </>
