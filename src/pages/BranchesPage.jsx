@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -44,17 +45,44 @@ function distanceKm(lat1, lng1, lat2, lng2) {
 }
 
 function toMinutes(hhmm) {
+  if (!hhmm || !hhmm.includes(':')) return null;
+
   const [h, m] = hhmm.split(':').map(Number);
+
+  if (
+    !Number.isInteger(h) ||
+    !Number.isInteger(m) ||
+    h < 0 ||
+    h > 23 ||
+    m < 0 ||
+    m > 59
+  ) {
+    return null;
+  }
+
   return h * 60 + m;
 }
 
 function isOpenNow(b) {
   if (b.available === false) return false;
 
+  const open = toMinutes(b.open);
+  const close = toMinutes(b.close);
+
+  if (open === null || close === null || open === close) {
+    return false;
+  }
+
   const now = new Date();
   const mins = now.getHours() * 60 + now.getMinutes();
 
-  return mins >= toMinutes(b.open) && mins < toMinutes(b.close);
+  // Normal operating hours
+  if (close > open) {
+    return mins >= open && mins < close;
+  }
+
+  // Overnight operating hours
+  return mins >= open || mins < close;
 }
 
 // Moves the map when the target changes
@@ -96,14 +124,27 @@ export default function BranchesPage() {
   };
 
   const list = useMemo(() => {
-    const withInfo = branches.map((b) => ({
-      ...b,
-      isOpen: isOpenNow(b),
-      hours: `${b.open} - ${b.close}`,
-      distance: userPos
-        ? distanceKm(userPos[0], userPos[1], b.lat, b.lng)
-        : null,
-    }));
+    const withInfo = branches
+      .filter(
+        (b) =>
+          Number.isFinite(Number(b.lat)) &&
+          Number.isFinite(Number(b.lng))
+      )
+      .map((b) => ({
+        ...b,
+        lat: Number(b.lat),
+        lng: Number(b.lng),
+        isOpen: isOpenNow(b),
+        hours: `${b.open} - ${b.close}`,
+        distance: userPos
+          ? distanceKm(
+              userPos[0],
+              userPos[1],
+              Number(b.lat),
+              Number(b.lng)
+            )
+          : null,
+      }));
 
     if (userPos) {
       withInfo.sort((a, b) => a.distance - b.distance);
@@ -140,6 +181,7 @@ export default function BranchesPage() {
 
         <div className="locate-row">
           <button
+            type="button"
             className="locate-btn"
             onClick={findMe}
             disabled={status === 'loading'}
@@ -183,6 +225,8 @@ export default function BranchesPage() {
           <p>{error}</p>
         ) : branches.length === 0 ? (
           <p>No branches are currently available.</p>
+        ) : list.length === 0 ? (
+          <p>No branches with valid map locations are available.</p>
         ) : (
           <div className="branches-layout">
             <div className="branch-list">

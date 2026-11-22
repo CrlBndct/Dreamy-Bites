@@ -1,8 +1,10 @@
+
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useProducts } from '../ProductsContext';
 import { useAuth } from '../AuthContext';
 import { useCart } from '../CartContext';
+import { imageUrl } from '../imageUrl';
 import '../styles/App.css';
 
 function Mybutton({ name, className, func }) {
@@ -15,7 +17,12 @@ function Mybutton({ name, className, func }) {
   };
 
   return (
-    <button style={buttonStyle} className={className} onClick={func}>
+    <button
+      type="button"
+      style={buttonStyle}
+      className={className}
+      onClick={func}
+    >
       {name}
     </button>
   );
@@ -50,8 +57,10 @@ export default function HomePage() {
   return (
     <>
       <div className="nav-bar">
-        <span className="logo-name">Dreamy</span>
-        <span className="logo-name2">Bites</span>
+        <div className="brand-logo">
+          <span className="logo-name">Dreamy</span>
+          <span className="logo-name2">Bites</span>
+        </div>
 
         <ul>
           <li><a href="#intro-sec">Home</a></li>
@@ -63,7 +72,11 @@ export default function HomePage() {
           {user?.role === 'baker' && <Link to="/baker">Dashboard</Link>}
           <Link to="/branches">Branches</Link>
           <Link to="/cart">Basket ({totalItems})</Link>
-          <button className="logout-btn" onClick={handleLogout}>
+          <button
+            type="button"
+            className="logout-btn"
+            onClick={handleLogout}
+          >
             Log out
           </button>
         </div>
@@ -98,6 +111,7 @@ export default function HomePage() {
           {filters.map((cat) => (
             <li className="categ" key={cat}>
               <button
+                type="button"
                 className="catBtn"
                 onClick={() => setCategory(cat)}
               >
@@ -116,7 +130,10 @@ export default function HomePage() {
         ) : (
           filterItems.map((foodItem) => (
             <div className="item" key={foodItem.foodId}>
-              <img src={foodItem.pic} alt={foodItem.foodName} />
+              <img
+                src={imageUrl(foodItem.pic)}
+                alt={foodItem.foodName}
+              />
 
               <h1>{foodItem.foodName}</h1>
 

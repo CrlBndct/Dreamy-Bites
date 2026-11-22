@@ -1,19 +1,66 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { api, getToken, setToken } from './api';
 
 const AuthContext = createContext();
 const USER_KEY = 'dreamybites-user';
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(() => {
-    try {
-      return getToken() ? JSON.parse(localStorage.getItem(USER_KEY)) : null;
-    } catch {
-      return null;
-    }
-  });
+function loadUser() {
+  try {
+    return getToken() ? JSON.parse(localStorage.getItem(USER_KEY)) : null;
+  } catch {
+    return null;
+  }
+}
 
-  const [loading] = useState(false);
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(loadUser);
+  const [loading, setLoading] = useState(() => !!getToken());
+
+  // Verify the saved session when the application starts.
+  useEffect(() => {
+    const token = getToken();
+
+    if (!token) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+
+    const verifySession = async () => {
+      try {
+        const verifiedUser = await api('/api/me');
+
+        if (!cancelled) {
+          setUser(verifiedUser);
+
+          try {
+            localStorage.setItem(USER_KEY, JSON.stringify(verifiedUser));
+          } catch {}
+        }
+      } catch {
+        if (!cancelled) {
+          setToken(null);
+          setUser(null);
+
+          try {
+            localStorage.removeItem(USER_KEY);
+          } catch {}
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    verifySession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const save = ({ token, user }) => {
     setToken(token);
@@ -48,4 +95,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext); 

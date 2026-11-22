@@ -1,393 +1,792 @@
-.baker-nav{
+/* =========================
+   BAKER NAVIGATION
+========================= */
+
+.baker-nav {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  height: 10vh;
-  min-height: 64px;
-  z-index: 100;
+  min-height: 70px;
+  z-index: 9999;
+
+  isolation: isolate;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 5%;
+  gap: 15px;
+
+  padding: 12px 5%;
   background-color: var(--blush);
   box-shadow: 0 3px 10px var(--shadow);
   color: var(--burgundy);
 }
 
-.baker-nav h1 small{
+.baker-nav h1 {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 28px);
+}
+
+.baker-nav h1 small {
   font-size: 16px;
   margin-left: 10px;
   color: var(--rust);
 }
 
 .baker-nav button,
-.baker-user{
+.baker-user {
   margin-left: 12px;
 }
 
-.baker-nav button{
+.baker-nav button {
   background: var(--burgundy);
   color: var(--cream);
   border: none;
   border-radius: 20px;
-  padding: 8px 16px;
+  padding: 9px 18px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.baker-nav button:hover{
+.baker-nav button:hover {
   background: var(--rust);
+  transform: translateY(-1px);
 }
 
-.baker-page{
-  max-width: 900px;
+.baker-nav button:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================
+   MAIN BAKER PAGE
+========================= */
+
+.baker-page {
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: calc(max(10vh, 64px) + 30px) 20px 60px;
+  padding: 110px 24px 60px;
   color: var(--ink);
+
+  position: relative;
+  z-index: 0;
 }
 
-.stats{
-  display: flex;
+.baker-page h2,
+.baker-page h3,
+.baker-page h4 {
+  overflow-wrap: break-word;
+}
+
+
+/* =========================
+   MAP STACKING FIX
+========================= */
+
+/* Keep map containers below the fixed navbar */
+.baker-page .leaflet-container,
+.baker-page .map-container,
+.baker-page [class*="map"] {
+  z-index: 0;
+}
+
+/* Leaflet controls and panes should remain
+   within the map's stacking context */
+.baker-page .leaflet-pane,
+.baker-page .leaflet-control-container {
+  z-index: 1;
+}
+
+
+/* =========================
+   DASHBOARD STATISTICS
+========================= */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
-  flex-wrap: wrap;
   margin-bottom: 25px;
 }
 
-.stat{
-  flex: 1;
-  min-width: 150px;
+.stat {
+  min-width: 0;
   background: var(--blush);
   border-radius: 15px;
-  padding: 15px;
+  padding: 20px 15px;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(142, 21, 35, 0.08);
+  transition: transform 0.2s ease;
 }
 
-.stat h2{
+.stat:hover {
+  transform: translateY(-3px);
+}
+
+.stat h2 {
   color: var(--burgundy);
+  margin: 0 0 5px;
+  font-size: clamp(20px, 2vw, 28px);
 }
 
-.tabs{
+.stat p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+
+/* =========================
+   TABS
+========================= */
+
+.tabs {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
 }
 
-.tab{
+.tab {
   padding: 10px 25px;
   border: none;
   border-radius: 30px;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: 600;
   background: var(--blush);
   color: var(--burgundy);
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.tab:hover{
+.tab:hover {
   background: var(--tan);
 }
 
-.tab.active{
+.tab.active {
   background: var(--burgundy);
   color: var(--cream);
 }
 
+
+/* =========================
+   ORDERS
+========================= */
+
 .order-card,
 .product-row,
-.product-form{
+.product-form {
   background: var(--blush-soft);
   border: 1px solid var(--blush);
   border-radius: 15px;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(142, 21, 35, 0.05);
+}
+
+.order-card {
+  transition: box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 12px rgba(142, 21, 35, 0.10);
 }
 
 .order-head,
-.order-foot{
+.order-foot {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
-.order-customer{
+.order-head h3 {
+  margin: 0;
+}
+
+.order-customer {
   color: var(--text-soft);
   margin-bottom: 8px;
+  overflow-wrap: break-word;
 }
 
-.order-card ul{
-  margin: 8px 0 12px 20px;
+.order-card ul {
+  margin: 12px 0 15px 20px;
+  line-height: 1.7;
 }
 
-.order-foot select{
-  padding: 6px;
+.order-card li {
+  overflow-wrap: break-word;
+}
+
+.order-foot {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.order-foot select {
+  padding: 8px 12px;
   border-radius: 8px;
   margin-right: 8px;
   color: var(--ink);
   border: 1px solid var(--blush);
+  background: white;
+  max-width: 100%;
 }
 
-.product-form{
+
+/* =========================
+   PRODUCT FORM
+========================= */
+
+.product-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 30px;
 }
 
-.product-form h2{
+.product-form h2 {
   color: var(--burgundy);
+  margin: 0 0 5px;
 }
 
 .product-form input,
-.product-form select{
-  padding: 10px;
+.product-form select,
+.product-form textarea {
+  width: 100%;
+  padding: 12px;
   border: 1px solid var(--blush);
   border-radius: 10px;
   font-size: 16px;
   color: var(--ink);
   background: white;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .product-form input:focus,
-.product-form select:focus{
+.product-form select:focus,
+.product-form textarea:focus {
   outline: none;
   border-color: var(--rust);
+  box-shadow: 0 0 0 3px rgba(206, 79, 47, 0.12);
 }
 
-.product-form label{
+.product-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.product-form label {
   display: flex;
   align-items: center;
   gap: 10px;
   color: var(--text-soft);
-}
-
-.product-row{
-  display: flex;
-  align-items: center;
-  gap: 15px;
   flex-wrap: wrap;
 }
 
-.product-row img{
-  width: 80px;
-  height: 80px;
+.product-form input[type="checkbox"] {
+  width: auto;
+  accent-color: var(--burgundy);
+}
+
+
+/* =========================
+   PRODUCT MANAGEMENT
+========================= */
+
+.product-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.product-row img {
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: 12px;
+  flex-shrink: 0;
 }
 
-.product-info{
+.product-info {
   flex: 1;
-  min-width: 150px;
+  min-width: 180px;
 }
 
-.product-info p{
+.product-info h3 {
+  margin: 0 0 8px;
+  color: var(--burgundy);
+}
+
+.product-info p {
   color: var(--text-soft);
+  margin: 5px 0;
+  overflow-wrap: break-word;
 }
 
-.product-actions{
+.product-actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
-.baker-page button:not(.tab){
+
+/* =========================
+   BUTTONS
+========================= */
+
+.baker-page button:not(.tab) {
   background: var(--blush);
   color: var(--burgundy);
   border: none;
   border-radius: 20px;
-  padding: 8px 14px;
+  padding: 9px 16px;
   cursor: pointer;
+  font-weight: 600;
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
-.baker-page button.primary{
+.baker-page button.primary {
   background: var(--burgundy);
   color: var(--cream);
 }
 
-.baker-page button.danger{
+.baker-page button.danger {
   background: var(--rust);
   color: var(--cream);
 }
 
-.baker-page button:hover{
+.baker-page button:hover {
   filter: brightness(0.92);
 }
 
-.badge{
+.baker-page button:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================
+   BADGES
+========================= */
+
+.baker-page .badge {
+  display: inline-block;
   background: var(--burgundy);
   color: var(--cream);
   border-radius: 10px;
-  padding: 2px 8px;
+  padding: 4px 9px;
   font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-/* ---- Sales tab ---- */
-.panel{
+
+/* =========================
+   SALES PANEL
+========================= */
+
+.panel {
   background: var(--blush-soft);
   border: 1px solid var(--blush);
   border-radius: 15px;
-  padding: 15px 20px;
+  padding: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(142, 21, 35, 0.05);
 }
 
-.panel h2{
-  margin-bottom: 15px;
+.panel h2 {
+  margin: 0 0 20px;
   color: var(--burgundy);
 }
 
-.chart{
+
+/* =========================
+   SALES CHART
+========================= */
+
+.chart {
   display: flex;
   align-items: flex-end;
   gap: 12px;
-  height: 220px;
+  height: 250px;
+  width: 100%;
+  overflow-x: auto;
+  padding-bottom: 5px;
 }
 
-.bar-col{
+.bar-col {
   flex: 1;
+  min-width: 35px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
-.bar{
+.bar {
   width: 100%;
-  max-width: 50px;
+  max-width: 55px;
   min-height: 2px;
   background: linear-gradient(to top, var(--burgundy), var(--rust));
   border-radius: 8px 8px 0 0;
+  transition: opacity 0.2s ease;
 }
 
-.bar-value{
+.bar:hover {
+  opacity: 0.8;
+}
+
+.bar-value {
   font-size: 13px;
   color: var(--burgundy);
   min-height: 16px;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
-.bar-label{
+.bar-label {
   font-size: 14px;
   color: var(--text-soft);
+  text-align: center;
+  overflow-wrap: break-word;
 }
 
-.sales-table{
+
+/* =========================
+   SALES TABLE
+========================= */
+
+.sales-table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .sales-table th,
-.sales-table td{
+.sales-table td {
   text-align: left;
-  padding: 10px 8px;
+  padding: 12px 10px;
   border-bottom: 1px solid var(--blush);
 }
 
-.sales-table th{
+.sales-table th {
   color: var(--burgundy);
+  background: rgba(243, 182, 182, 0.2);
 }
 
-/* ================= MOBILE ================= */
-@media (max-width: 700px){
-  .baker-nav{
-    height: auto;
-    flex-direction: column;
-    gap: 6px;
-    padding: 8px 12px;
+.sales-table tbody tr:hover {
+  background: rgba(243, 182, 182, 0.15);
+}
+
+
+/* =========================
+   MEDIUM SCREENS
+========================= */
+
+@media (max-width: 900px) {
+  .baker-page {
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
-  .baker-nav h1{
-    font-size: 18px;
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-row {
+    gap: 15px;
+  }
+
+  .chart {
+    gap: 8px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  /* NAVIGATION */
+
+  .baker-nav {
+    position: fixed;
+    height: auto;
+    min-height: unset;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .baker-nav h1 {
+    font-size: 20px;
     text-align: center;
   }
 
-  .baker-nav h1 small{
+  .baker-nav h1 small {
     display: block;
-    margin: 0;
+    margin: 3px 0 0;
     font-size: 13px;
   }
 
-  .baker-nav > div{
+  .baker-nav > div {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
+    flex-wrap: wrap;
   }
 
-  .baker-nav button{
+  .baker-nav button {
     margin-left: 0;
-    padding: 6px 14px;
+    padding: 8px 14px;
     font-size: 14px;
   }
 
-  .baker-user{
-    display: none; /* the email is too long for a phone header */
+  .baker-user {
+    display: none;
   }
 
-  .baker-page{
-    padding: 120px 14px 40px;
+
+  /* PAGE */
+
+  .baker-page {
+    padding: 130px 14px 40px;
   }
 
-  .stats{
+
+  /* STATS */
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
 
-  .stat{
-    min-width: 120px;
-    padding: 12px 8px;
+  .stat {
+    padding: 15px 10px;
+    border-radius: 12px;
   }
 
-  .stat h2{
-    font-size: 20px;
+  .stat h2 {
+    font-size: 21px;
   }
 
-  .tabs{
+  .stat p {
+    font-size: 13px;
+  }
+
+
+  /* TABS */
+
+  .tabs {
+    gap: 8px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 10px;
+  }
+
+  .tab {
+    padding: 9px 16px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+
+  /* ORDERS */
+
+  .order-card,
+  .product-form,
+  .product-row {
+    padding: 15px;
+  }
+
+  .order-head,
+  .order-foot {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-head {
     gap: 8px;
   }
 
-  .tab{
-    padding: 8px 16px;
-    font-size: 15px;
+  .order-foot {
+    width: 100%;
   }
 
-  .order-foot > div{
+  .order-foot > div {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
     width: 100%;
   }
 
-  .order-foot select{
+  .order-foot select {
     margin-right: 0;
-    flex: 1;
-  }
-
-  .product-row img{
-    width: 64px;
-    height: 64px;
-  }
-
-  .product-actions{
     width: 100%;
   }
 
-  .panel{
-    padding: 12px;
+
+  /* PRODUCTS */
+
+  .product-row {
+    gap: 12px;
   }
 
-  .chart{
+  .product-row img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .product-info {
+    min-width: 0;
+    flex-basis: calc(100% - 85px);
+  }
+
+  .product-info h3 {
+    font-size: 16px;
+  }
+
+  .product-info p {
+    font-size: 14px;
+  }
+
+  .product-actions {
+    width: 100%;
+  }
+
+  .product-actions button {
+    flex: 1;
+  }
+
+
+  /* FORM */
+
+  .product-form input,
+  .product-form select,
+  .product-form textarea {
+    font-size: 16px;
+    padding: 11px;
+  }
+
+
+  /* SALES */
+
+  .panel {
+    padding: 15px 12px;
+  }
+
+  .panel h2 {
+    font-size: 19px;
+  }
+
+  .chart {
     gap: 6px;
-    height: 180px;
+    height: 200px;
+    overflow-x: auto;
   }
 
-  .bar-value{
+  .bar-col {
+    min-width: 30px;
+  }
+
+  .bar-value {
     font-size: 11px;
   }
 
-  .bar-label{
-    font-size: 12px;
+  .bar-label {
+    font-size: 11px;
+  }
+
+  .sales-table {
+    min-width: 500px;
+  }
+
+  .panel:has(.sales-table) {
+    overflow-x: auto;
   }
 
   .sales-table th,
-  .sales-table td{
-    font-size: 14px;
-    padding: 8px 4px;
+  .sales-table td {
+    font-size: 13px;
+    padding: 9px 6px;
+  }
+}
+
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 400px) {
+
+  .baker-nav h1 {
+    font-size: 18px;
+  }
+
+  .baker-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .stats {
+    gap: 8px;
+  }
+
+  .stat {
+    padding: 12px 8px;
+  }
+
+  .stat h2 {
+    font-size: 19px;
+  }
+
+  .tab {
+    padding: 8px 13px;
+    font-size: 13px;
+  }
+
+  .order-card,
+  .product-form,
+  .product-row {
+    padding: 12px;
+  }
+
+  .product-actions button {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .chart {
+    height: 170px;
+  }
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .baker-nav button,
+  .stat,
+  .bar,
+  .baker-page button:not(.tab) {
+    transition: none;
   }
 }

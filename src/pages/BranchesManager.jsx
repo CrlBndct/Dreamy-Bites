@@ -1,5 +1,15 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { useBranches } from '../BranchesContext';
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap,
+  useMapEvents,
+} from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const EMPTY = {
   name: '',
@@ -11,6 +21,40 @@ const EMPTY = {
   close: '19:00',
 };
 
+// Fix Leaflet marker icons in Vite
+const markerIcon = L.icon({
+  iconUrl: new URL('leaflet/dist/images/marker-icon.png', import.meta.url).href,
+  shadowUrl: new URL('leaflet/dist/images/marker-shadow.png', import.meta.url).href,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+const DEFAULT_CENTER = [12.8797, 121.7740];
+
+function MapClickHandler({ onSelect }) {
+  useMapEvents({
+    click(e) {
+      onSelect(e.latlng);
+    },
+  });
+
+  return null;
+}
+
+function MapCenterUpdater({ position }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (position) {
+      map.setView(position, Math.max(map.getZoom(), 15));
+    }
+  }, [map, position]);
+
+  return null;
+}
+
 export default function BranchesManager() {
   const { branches, addBranch, updateBranch, deleteBranch } = useBranches();
 
@@ -19,20 +63,56 @@ export default function BranchesManager() {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
+  const position =
+    form.lat !== '' &&
+    form.lng !== '' &&
+    Number.isFinite(Number(form.lat)) &&
+    Number.isFinite(Number(form.lng)) &&
+    Number(form.lat) >= -90 &&
+    Number(form.lat) <= 90 &&
+    Number(form.lng) >= -180 &&
+    Number(form.lng) <= 180
+      ? [Number(form.lat), Number(form.lng)]
+      : null;
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleMapSelect = (latlng) => {
+    setForm((prev) => ({
+      ...prev,
+      lat: latlng.lat.toFixed(7),
+      lng: latlng.lng.toFixed(7),
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    const lat = Number(form.lat);
+    const lng = Number(form.lng);
+
+    if (
+      !Number.isFinite(lat) ||
+      !Number.isFinite(lng) ||
+      lat < -90 ||
+      lat > 90 ||
+      lng < -180 ||
+      lng > 180
+    ) {
+      setError('Please select a valid location on the map.');
+      return;
+    }
+
     setSaving(true);
 
     try {
       const data = {
         ...form,
-        lat: Number(form.lat),
-        lng: Number(form.lng),
+        lat,
+        lng,
       };
 
       if (editingId !== null) {
@@ -131,25 +211,62 @@ export default function BranchesManager() {
           required
         />
 
-        <input
-          name="lat"
-          type="number"
-          step="any"
-          placeholder="Latitude (e.g. 14.2813)"
-          value={form.lat}
-          onChange={handleChange}
-          required
-        />
+        <label>Select branch location</label>
 
-        <input
-          name="lng"
-          type="number"
-          step="any"
-          placeholder="Longitude (e.g. 121.4164)"
-          value={form.lng}
-          onChange={handleChange}
-          required
-        />
+        <p style={{ fontSize: '14px' }}>
+          Click on the map to place the marker. You can also drag
+          the marker to adjust the exact location.
+        </p>
+
+        <div
+          style={{
+            height: '350px',
+            width: '100%',
+            marginBottom: '15px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+          }}
+        >
+          <MapContainer
+            center={position || DEFAULT_CENTER}
+            zoom={position ? 15 : 6}
+            style={{ height: '100%', width: '100%' }}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+
+            <MapClickHandler onSelect={handleMapSelect} />
+
+            {position && (
+              <>
+                <MapCenterUpdater position={position} />
+
+                <Marker
+                  position={position}
+                  icon={markerIcon}
+                  draggable={true}
+                  eventHandlers={{
+                    dragend(e) {
+                      handleMapSelect(e.target.getLatLng());
+                    },
+                  }}
+                />
+              </>
+            )}
+          </MapContainer>
+        </div>
+
+        {position ? (
+          <p>
+            <strong>Selected coordinates:</strong><br />
+            Latitude: {form.lat}<br />
+            Longitude: {form.lng}
+          </p>
+        ) : (
+          <p>Select a location on the map to set the coordinates.</p>
+        )}
 
         <label>
           Opens at
@@ -174,7 +291,11 @@ export default function BranchesManager() {
         </label>
 
         <div>
-          <button type="submit" className="primary" disabled={saving}>
+          <button
+            type="submit"
+            className="primary"
+            disabled={saving || !position}
+          >
             {saving
               ? 'Saving...'
               : editingId !== null
@@ -205,13 +326,22 @@ export default function BranchesManager() {
           </div>
 
           <div className="product-actions">
-            <button onClick={() => handleToggleAvailability(b)}>
+            <button
+              type="button"
+              onClick={() => handleToggleAvailability(b)}
+            >
               {b.available === false ? 'Reopen' : 'Close temporarily'}
             </button>
 
-            <button onClick={() => startEdit(b)}>Edit</button>
+            <button type="button" onClick={() => startEdit(b)}>
+              Edit
+            </button>
 
-            <button className="danger" onClick={() => handleDelete(b)}>
+            <button
+              type="button"
+              className="danger"
+              onClick={() => handleDelete(b)}
+            >
               Delete
             </button>
           </div>

@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { api } from './api';
 
@@ -19,7 +20,9 @@ export function ProductsProvider({ children }) {
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const run = async (fn) => {
     try {
@@ -30,14 +33,26 @@ export function ProductsProvider({ children }) {
     }
   };
 
-  const addProduct = (p) => run(() => api('/api/products', { method: 'POST', body: p }));
+  const addProduct = (p) =>
+    run(() => api('/api/products', { method: 'POST', body: p }));
+
   const updateProduct = (id, changes) =>
     run(() => api(`/api/products/${id}`, { method: 'PUT', body: changes }));
-  const deleteProduct = (id) => run(() => api(`/api/products/${id}`, { method: 'DELETE' }));
+
+  const deleteProduct = (id) =>
+    run(() => api(`/api/products/${id}`, { method: 'DELETE' }));
 
   return (
     <ProductsContext.Provider
-      value={{ products, loading, error, refresh: load, addProduct, updateProduct, deleteProduct }}
+      value={{
+        products,
+        loading,
+        error,
+        refresh: load,
+        addProduct,
+        updateProduct,
+        deleteProduct,
+      }}
     >
       {children}
     </ProductsContext.Provider>
