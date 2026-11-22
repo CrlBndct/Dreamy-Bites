@@ -59,6 +59,21 @@
     background-color: var(--rust);
 }
 
+.login .logbtn:disabled{
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.login .switch{
+    align-self: center;
+    background: none;
+    border: none;
+    color: var(--burgundy);
+    text-decoration: underline;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 .login .error{
     color: var(--burgundy);
     font-weight: 600;

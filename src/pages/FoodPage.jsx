@@ -11,18 +11,15 @@ export default function FoodPage() {
   const navigate = useNavigate();
 
   const { addToCart, totalItems } = useCart();
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
   const { ratings, rate } = useRatings();
   const [qty, setQty] = useState(1);
 
   const food = products.find((f) => f.foodId === Number(item));
 
-  // rating math (safe if rating fields are missing)
   const myRating = food ? ratings[food.foodId] || 0 : 0;
-  const baseCount = food?.ratingCount || 0;
-  const baseRating = food?.rating || 0;
-  const votes = food ? baseCount + (myRating ? 1 : 0) : 0;
-  const average = votes ? (baseRating * baseCount + myRating) / votes : 0;
+  const votes = food?.ratingCount || 0;
+  const average = food?.rating || 0;
 
   const handleAdd = () => {
     addToCart(food, qty);
@@ -37,7 +34,9 @@ export default function FoodPage() {
         <Link to="/cart" className="cart">Basket ({totalItems})</Link>
       </div>
 
-      {!food ? (
+      {loading ? (
+        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>Loading...</h2>
+      ) : !food ? (
         <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>Item not found.</h2>
       ) : (
         <div className="container">

@@ -1,22 +1,29 @@
-import { useState } from 'react';
-
-const KEY = 'dreamybites-ratings';
+import { useEffect, useState } from 'react';
+import { api } from './api';
+import { useAuth } from './AuthContext';
+import { useProducts } from './ProductsContext';
 
 export function useRatings() {
-  const [ratings, setRatings] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem(KEY)) || {};
-    } catch {
-      return {};
-    }
-  });
+  const { user } = useAuth();
+  const { refresh } = useProducts();
+  const [ratings, setRatings] = useState({});
 
-  const rate = (foodId, stars) => {
-    setRatings((prev) => {
-      const next = { ...prev, [foodId]: stars };
-      try { localStorage.setItem(KEY, JSON.stringify(next)); } catch {}
-      return next;
-    });
+  useEffect(() => {
+    if (!user) {
+      setRatings({});
+      return;
+    }
+    api('/api/ratings/mine').then(setRatings).catch(() => {});
+  }, [user]);
+
+  const rate = async (foodId, stars) => {
+    try {
+      await api(`/api/products/${foodId}/rating`, { method: 'POST', body: { stars } });
+      setRatings((prev) => ({ ...prev, [foodId]: stars }));
+      await refresh(); // the server recalculates the average
+    } catch (err) {
+      alert(err.message);
+    }
   };
 
   return { ratings, rate };

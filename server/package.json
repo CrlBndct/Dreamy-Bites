@@ -1,0 +1,12 @@
+{
+  "name": "dreamybites-server",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "dev": "node --watch --env-file=.env index.js"
+  },
+  "dependencies": {
+    "pg": "^8.13.0"
+  }
+}
