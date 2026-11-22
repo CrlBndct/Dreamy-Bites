@@ -1,102 +1,189 @@
-.login{
+/* ==============================
+   LOGIN PAGE
+============================== */
+
+.login {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 16px;
+    min-height: 100dvh;
+    padding: 24px;
     background-color: var(--blush);
 }
 
-.login fieldset{
+.login fieldset {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
     width: 500px;
     max-width: 100%;
-    padding: 20px 40px 30px;
+    padding: 24px 40px 32px;
     border: 2px solid var(--burgundy);
     border-radius: 20px;
     background-color: var(--cream);
     box-shadow: 0 8px 24px var(--shadow);
 }
 
-.login legend{
+.login legend {
     font-size: 30px;
+    font-weight: 700;
     color: var(--burgundy);
-    padding: 0 10px;
+    padding: 0 12px;
 }
 
-.login input{
+.login input {
     width: 100%;
-    height: 40px;
-    padding: 0 10px;
-    font-size: 20px;
+    min-width: 0;
+    height: 45px;
+    padding: 0 14px;
+    font-size: 18px;
     color: var(--ink);
     background-color: white;
     border: 1px solid var(--blush);
     border-radius: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.login input:focus{
+.login input:focus {
     outline: none;
     border-color: var(--rust);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
-.login .logbtn{
+.login input::placeholder {
+    color: #888;
+}
+
+.login .logbtn {
     align-self: center;
-    width: 120px;
-    height: 40px;
-    margin-top: 10px;
+    width: 140px;
+    min-height: 44px;
+    margin-top: 5px;
+    padding: 10px 16px;
     background-color: var(--burgundy);
     color: var(--cream);
     border: none;
     border-radius: 40px;
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
 }
 
-.login .logbtn:hover{
+.login .logbtn:hover {
     background-color: var(--rust);
 }
 
-.login .logbtn:disabled{
-    opacity: 0.6;
-    cursor: wait;
+.login .logbtn:active {
+    transform: scale(0.97);
 }
 
-.login .switch{
+.login .logbtn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+.login .switch {
     align-self: center;
+    padding: 5px;
     background: none;
     border: none;
     color: var(--burgundy);
     text-decoration: underline;
+    text-underline-offset: 3px;
     font-size: 16px;
     cursor: pointer;
 }
 
-.login .error{
+.login .switch:hover {
+    color: var(--rust);
+}
+
+.login .error {
     color: var(--burgundy);
     font-weight: 600;
     font-size: 16px;
+    text-align: center;
+    overflow-wrap: break-word;
 }
 
-@media (max-width: 480px){
-    .login fieldset{
-        padding: 16px 18px 24px;
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 768px) {
+    .login {
+        padding: 20px;
     }
 
-    .login legend{
+    .login fieldset {
+        width: 460px;
+        padding: 22px 30px 28px;
+    }
+
+    .login legend {
+        font-size: 28px;
+    }
+}
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 480px) {
+    .login {
+        padding: 16px;
+    }
+
+    .login fieldset {
+        width: 100%;
+        padding: 18px 20px 26px;
+        gap: 15px;
+        border-radius: 16px;
+    }
+
+    .login legend {
         font-size: 24px;
+        padding: 0 8px;
     }
 
-    .login input{
-        font-size: 16px; /* 16px+ stops iPhones zooming in on tap */
+    .login input {
+        font-size: 16px;
         height: 44px;
+        padding: 0 12px;
     }
 
-    .login .logbtn{
+    .login .logbtn {
         width: 100%;
         height: 44px;
-        font-size: 18px;
+        font-size: 17px;
+    }
+
+    .login .switch {
+        font-size: 15px;
+    }
+
+    .login .error {
+        font-size: 14px;
+    }
+}
+
+/* ==============================
+   SMALL MOBILE
+============================== */
+
+@media (max-width: 360px) {
+    .login {
+        padding: 12px;
+    }
+
+    .login fieldset {
+        padding: 16px;
+    }
+
+    .login legend {
+        font-size: 22px;
     }
 }

@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
 import { api } from './api';
 
 const BranchesContext = createContext();
@@ -8,30 +15,56 @@ export function BranchesProvider({ children }) {
 
   const load = useCallback(async () => {
     try {
-      setBranches(await api('/api/branches'));
+      const data = await api('/api/branches');
+      setBranches(data);
+      return data;
     } catch (err) {
-      console.error(err.message);
+      console.error('Failed to load branches:', err.message);
+      throw err;
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load().catch(() => {});
+  }, [load]);
 
   const run = async (fn) => {
-    try {
-      await fn();
-      await load();
-    } catch (err) {
-      alert(err.message);
-    }
+    await fn();
+    await load();
   };
 
-  const addBranch = (b) => run(() => api('/api/branches', { method: 'POST', body: b }));
+  const addBranch = (b) =>
+    run(() =>
+      api('/api/branches', {
+        method: 'POST',
+        body: b,
+      })
+    );
+
   const updateBranch = (id, changes) =>
-    run(() => api(`/api/branches/${id}`, { method: 'PUT', body: changes }));
-  const deleteBranch = (id) => run(() => api(`/api/branches/${id}`, { method: 'DELETE' }));
+    run(() =>
+      api(`/api/branches/${id}`, {
+        method: 'PUT',
+        body: changes,
+      })
+    );
+
+  const deleteBranch = (id) =>
+    run(() =>
+      api(`/api/branches/${id}`, {
+        method: 'DELETE',
+      })
+    );
 
   return (
-    <BranchesContext.Provider value={{ branches, addBranch, updateBranch, deleteBranch }}>
+    <BranchesContext.Provider
+      value={{
+        branches,
+        addBranch,
+        updateBranch,
+        deleteBranch,
+      }}
+    >
       {children}
     </BranchesContext.Provider>
   );

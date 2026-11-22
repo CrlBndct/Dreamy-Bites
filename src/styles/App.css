@@ -1,5 +1,4 @@
-/* ============ THEME COLORS: change them here ============ */
-:root{
+:root {
   --burgundy: #8E1523;
   --rust: #CE4F2F;
   --tan: #E29B6A;
@@ -11,537 +10,713 @@
   --text-soft: #7B4B50;
   --line: #EAD0CA;
 
-  --shadow: rgba(142, 21, 35, 0.25);
+  --shadow: rgba(142, 21, 35, 0.18);
 }
 
-*{
+* {
   box-sizing: border-box;
 }
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
-body{
+body {
   margin: 0;
   background-color: var(--cream);
   color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
-img{
+img {
   max-width: 100%;
 }
 
-/* ------ Navigation Bar ------- */
-.nav-bar{
-  position: fixed;
-  padding-top: 5px;
-  width: 100%;
-  height: 10vh;
-  z-index: 100;
+button,
+input,
+select,
+textarea {
+  font: inherit;
 }
 
-.nav-bar > ul{
+button {
+  transition: background-color 0.2s ease,
+              color 0.2s ease,
+              transform 0.2s ease;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--rust);
+  outline-offset: 3px;
+}
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 75px;
+  padding: 10px 25px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: var(--cream);
+}
+
+/* LOGO WRAPPER */
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+
+  position: relative;
+  z-index: 2;
+}
+
+/* DREAMY */
+.logo-name {
+  margin: 0;
+  font-size: 26px;
+
+  background-color: var(--burgundy);
+  color: var(--cream);
+
+  padding: 8px 12px;
+  border-radius: 10px 0 0 10px;
+}
+
+/* BITES */
+.logo-name2 {
+  margin: 0;
+  font-size: 26px;
+
+  color: var(--burgundy);
+
+  padding: 8px 12px;
+  border-radius: 0 10px 10px 0;
+}
+
+/* NAV LINKS */
+.nav-bar > ul {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 2vh;
-  list-style-type: none;
-  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+
+  list-style: none;
+  margin: 0;
+  padding: 12px 25px;
+
   border: 1px solid var(--blush);
-  width: 300px;
-  height: 8vh;
-  border-radius: 30px;
+  border-radius: 40px;
+
   background-color: var(--blush);
-  box-shadow: -2px 5px 10px 1px var(--shadow);
-  padding: 0;
+  box-shadow: 0 4px 10px var(--shadow);
 }
 
-.nav-bar > ul > li{
-  display: inline-block;
-  margin: 15px;
-  font-size: 20px;
+.nav-bar > ul > li {
+  margin: 0;
+  font-size: 18px;
 }
 
-.nav-bar > ul > li > a{
-  text-decoration-line: none;
+.nav-bar > ul > li > a {
+  text-decoration: none;
   color: var(--burgundy);
   font-weight: 600;
+  transition: color 0.2s ease;
 }
 
-.nav-bar > ul > li > a:hover{
+.nav-bar > ul > li > a:hover {
   color: var(--rust);
 }
 
-.nav-bar > span{
-  display: inline;
-}
+/* BASKET / DASHBOARD / LOG OUT */
+.nav-right {
+  position: relative;
+  z-index: 2;
 
-.logo-name{
-  position: absolute;
-  font-size: 30px;
-  margin: 10px;
-  background-color: var(--burgundy);
-  color: var(--cream);
-  padding: 5px;
-  border-radius: 10px;
-}
-
-.logo-name2{
-  position: absolute;
-  left: 105px;
-  font-size: 30px;
-  margin: 10px;
-  color: var(--burgundy);
-  border-radius: 30px;
-  padding: 5px;
-}
-
-/* Basket / Dashboard / Log out */
-.nav-right{
-  position: absolute;
-  right: 5%;
-  top: 20px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 }
 
-.nav-right a{
-  font-size: 20px;
+.nav-right a {
+  font-size: 17px;
   color: var(--burgundy);
   text-decoration: none;
   font-weight: 600;
 }
 
-.nav-right a:hover{
+.nav-right a:hover {
   color: var(--rust);
 }
 
-.logout-btn{
+.logout-btn {
   background-color: var(--burgundy);
   color: var(--cream);
   border: none;
   border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 18px;
+  padding: 8px 14px;
+  font-size: 16px;
   cursor: pointer;
 }
 
-.logout-btn:hover{
+.logout-btn:hover {
   background-color: var(--rust);
 }
 
-/* ------ Intro section ------- */
-.intro-sec{
+/* =====================================================
+   INTRO / HERO SECTION
+   ===================================================== */
+.intro-sec {
   position: relative;
+
+  min-height: 100vh;
   width: 100%;
-  height: 100vh;
+
+  display: flex;
+  align-items: center;
+
+  padding: 120px 8% 80px;
 }
 
-.text{
-  position: absolute;
-  top: 150px;
-  left: 100px;
+.text {
+  width: 100%;
+  max-width: 750px;
 }
 
 .text > h1,
-.text > h3{
-  margin: 10px;
+.text > h3 {
+  margin: 10px 0;
 }
 
-.text > h1{
-  font-size: 60px;
-  width: 65%;
+.text > h1 {
+  font-size: clamp(38px, 5vw, 65px);
+  line-height: 1.15;
   color: var(--burgundy);
+  max-width: 800px;
 }
 
-.text > h3{
-  width: 60%;
+.text > h3 {
+  font-size: clamp(16px, 2vw, 22px);
+  line-height: 1.6;
+  max-width: 650px;
   color: var(--text-soft);
 }
 
-/* !important because the button's colors are written inline in HomePage.jsx */
-.btn1{
-  position: absolute;
-  top: 450px;
-  left: 200px;
-  width: 150px;
-  height: 50px;
+/* !IMPORTANT BECAUSE BUTTON COLORS ARE WRITTEN INLINE IN HOMEPAGE.JSX */
+.btn1 {
+  margin-top: 25px;
+
+  width: 160px;
+  min-height: 50px;
+
   cursor: pointer;
+
   background-color: var(--burgundy) !important;
-  border-color: var(--burgundy) !important;
+  border: 2px solid var(--burgundy) !important;
+  border-radius: 30px;
+
   color: var(--cream) !important;
-  transition: background-color 0.3s ease;
+
+  transition: background-color 0.3s ease,
+              transform 0.2s ease;
 }
 
-.btn1:hover{
+.btn1:hover {
   background-color: var(--rust) !important;
   border-color: var(--rust) !important;
+  transform: translateY(-2px);
 }
 
-/* ------ Menu ------- */
-.menu{
+/* =====================================================
+   MENU SECTION
+   ===================================================== */
+.menu {
   position: relative;
+
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+
   width: 100%;
-  height: auto;
-  padding-bottom: 200px;
+  padding: 150px 5% 80px;
+
+  gap: 25px;
 }
 
-.menu > h1{
+.menu > h1 {
+  position: absolute;
+  top: 35px;
+  left: 5%;
+
+  font-size: clamp(32px, 4vw, 50px);
   color: var(--burgundy);
-  position: absolute;
-  left: 100px;
-  top: 30px;
-  font-size: 50px;
+  margin: 0;
 }
 
-.filter{
-  list-style-type: none;
+.filter {
+  list-style: none;
+
   position: absolute;
-  top: 90px;
-  left: 100px;
+  top: 100px;
+  left: 5%;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  margin: 0;
+  padding: 0;
 }
 
-.filter > .categ{
+.filter > .categ {
   display: inline-block;
-  margin: 20px;
+  margin: 0;
 }
 
-.catBtn{
-  box-sizing: border-box;
-  font-size: 20px;
-  width: auto;
-  padding: 10px 18px;
+.catBtn {
+  font-size: 17px;
+  padding: 10px 20px;
+
   border-radius: 30px;
   background-color: var(--blush);
   color: var(--burgundy);
-  border: none;
+  border: 1px solid transparent;
+
   cursor: pointer;
-  transition: all ease 0.3s;
+  transition: all 0.3s ease;
 }
 
-.catBtn:hover{
+.catBtn:hover {
   background-color: var(--tan);
 }
 
-.catBtn:focus{
+.catBtn:focus,
+.catBtn.active {
   background-color: var(--burgundy);
   color: var(--cream);
   outline: none;
 }
 
-.item{
+/* =====================================================
+   PRODUCT CARDS
+   ===================================================== */
+.item {
   position: relative;
-  top: 170px;
-  left: 90px;
-  margin: 20px;
-  width: 400px;
-  height: 500px;
+
+  display: flex;
+  flex-direction: column;
+
+  width: calc(33.333% - 25px);
+  min-width: 260px;
+  max-width: 380px;
+  min-height: 480px;
+
+  margin: 0;
+  padding: 0 0 20px;
+
   border-radius: 20px;
-  padding: 0;
   background-color: var(--blush);
   box-shadow: 0 6px 16px var(--shadow);
+
   overflow: hidden;
-  transition: all ease 0.3s;
+
+  transition: transform 0.25s ease,
+              box-shadow 0.25s ease;
 }
 
-.item:hover{
-  top: 150px;
+.item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 22px var(--shadow);
 }
 
-.item > img{
-  position: relative;
-  margin: 0;
+.item > img {
+  display: block;
+
   width: 100%;
   height: 250px;
-  border-radius: 20px;
+
+  margin: 0;
+
   object-fit: cover;
 }
 
-.item > h1{
-  margin-left: 20px;
+.item > h1 {
+  margin: 20px 20px 10px;
   color: var(--burgundy);
-}
-
-.item > h3{
-  margin-left: 20px;
-  color: var(--ink);
-}
-
-.item > h2{
-  position: absolute;
-  top: 440px;
-  left: 15px;
-  color: var(--burgundy);
-}
-
-.view{
-  position: absolute;
-  left: 260px;
-  top: 430px;
-  background-color: var(--burgundy);
-  width: 100px;
-  height: 50px;
-  border-radius: 25px;
-  color: var(--cream);
   font-size: 25px;
-  text-align: center;
-  text-decoration-line: none;
-  padding-top: 10px;
+}
+
+.item > h3 {
+  margin: 0 20px;
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.item > h2 {
+  margin: auto 20px 0;
+  padding-top: 20px;
+
+  color: var(--burgundy);
+  font-size: 22px;
+}
+
+/* VIEW PRODUCT BUTTON */
+.view {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  align-self: flex-end;
+
+  margin: 15px 20px 0;
+  padding: 10px 22px;
+
+  background-color: var(--burgundy);
+  border-radius: 25px;
+
+  color: var(--cream);
+  font-size: 18px;
+  text-decoration: none;
+
   transition: background-color 0.3s ease;
 }
 
-.view:hover{
+.view:hover {
   background-color: var(--rust);
 }
 
-/* ------ About ------- */
-#menu, #about, #intro-sec{
-  scroll-margin-top: 10vh;
+/* =====================================================
+   ABOUT SECTION
+   ===================================================== */
+#menu,
+#about,
+#intro-sec {
+  scroll-margin-top: 90px;
 }
 
-#about{
+#about {
   background-color: var(--blush);
   color: var(--ink);
+
+  padding: 60px 20px;
+  text-align: center;
 }
 
-#about > h1{
-  font-size: 50px;
-  margin-bottom: 10px;
+#about > h1 {
+  font-size: clamp(32px, 4vw, 50px);
+  margin-bottom: 15px;
   color: var(--burgundy);
 }
 
-#about > p{
-  max-width: 600px;
+#about > p {
+  max-width: 700px;
   margin: 0 auto;
-  font-size: 20px;
+
+  font-size: 18px;
+  line-height: 1.7;
 }
 
 /* =====================================================
-   TABLET (up to 1150px): intro flows instead of floating
+   TABLET
    ===================================================== */
-@media (max-width: 1150px){
-  .nav-bar > ul{
-    display: none; /* would overlap the logo and the links */
+@media (max-width: 1150px) {
+  .nav-bar {
+    flex-wrap: wrap;
   }
 
-  .intro-sec{
-    height: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 150px 60px 60px;
+  .nav-bar > ul {
+    display: none;
   }
 
-  .text{
-    position: static;
+  .intro-sec {
+    min-height: 90vh;
+    padding: 120px 6% 60px;
   }
 
-  .text > h1{
-    font-size: 48px;
-    width: 100%;
+  .text > h1 {
+    font-size: clamp(36px, 6vw, 50px);
   }
 
-  .text > h3{
-    width: 100%;
+  .menu {
+    padding-left: 4%;
+    padding-right: 4%;
   }
 
-  .btn1{
-    position: static;
-    margin: 20px 10px 0;
+  .menu > h1 {
+    left: 4%;
+  }
+
+  .filter {
+    left: 4%;
+  }
+
+  .item {
+    width: calc(50% - 25px);
   }
 }
 
 /* =====================================================
-   MOBILE (up to 900px)
+   MOBILE
    ===================================================== */
-@media (max-width: 900px){
-  body{
+@media (max-width: 768px) {
+  body {
     overflow-x: hidden;
   }
 
-  /* two-row navbar: logo on top, links below */
-  .nav-bar{
+  /* NAVIGATION */
+  .nav-bar {
+    position: fixed;
+
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 6px 0;
+
+    gap: 10px;
     height: auto;
-    padding: 8px 12px;
+    min-height: 0;
+
+    padding: 10px 12px;
+
     background-color: var(--blush);
     box-shadow: 0 3px 10px var(--shadow);
   }
 
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+  }
+
   .logo-name,
-  .logo-name2{
+  .logo-name2 {
     position: static;
+
     margin: 0;
     font-size: 22px;
-    padding: 4px 8px;
+    padding: 5px 8px;
   }
 
-  .logo-name2{
-    padding-left: 6px;
+  .logo-name {
+    border-radius: 8px 0 0 8px;
   }
 
-  .nav-right{
+  .logo-name2 {
+    border-radius: 0 8px 8px 0;
+  }
+
+  .nav-right {
     position: static;
-    width: 100%;
+
+    display: flex;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 6px 14px;
+
+    width: 100%;
+    gap: 8px 15px;
   }
 
-  .nav-right a{
+  .nav-right a {
     font-size: 15px;
   }
 
-  .logout-btn{
-    font-size: 15px;
-    padding: 5px 12px;
+  .logout-btn {
+    font-size: 14px;
+    padding: 6px 12px;
   }
 
-  /* intro */
-  .intro-sec{
-    min-height: 90vh;
-    padding: 120px 20px 40px;
+  /* HERO */
+  .intro-sec {
+    min-height: 85vh;
+
+    padding: 140px 20px 50px;
+
+    align-items: center;
   }
 
-  .text > h1{
-    font-size: 34px;
+  .text {
+    width: 100%;
   }
 
-  .text > h3{
+  .text > h1 {
+    font-size: clamp(32px, 9vw, 42px);
+    width: 100%;
+  }
+
+  .text > h3 {
     font-size: 16px;
+    line-height: 1.6;
+    width: 100%;
   }
 
-  .btn1{
+  .btn1 {
     width: 170px;
-    height: 46px;
-    margin: 20px 10px 0;
+    min-height: 46px;
+    margin-top: 20px;
   }
 
-  /* menu: one column of cards */
-  .menu{
+  /* MENU */
+  .menu {
     flex-direction: column;
     align-items: center;
-    padding: 20px 16px 60px;
+
+    padding: 30px 16px 60px;
+    gap: 20px;
   }
 
-  .menu > h1{
+  .menu > h1 {
     position: static;
+
     align-self: flex-start;
+
     font-size: 36px;
     margin: 0 0 10px;
   }
 
-  .filter{
+  .filter {
     position: static;
+
     align-self: flex-start;
+
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin: 0 0 10px;
+
+    margin: 0 0 15px;
     padding: 0;
   }
 
-  .filter > .categ{
+  .filter > .categ {
     margin: 0;
   }
 
-  .catBtn{
-    font-size: 16px;
+  .catBtn {
+    font-size: 15px;
     padding: 8px 16px;
   }
 
-  .item{
-    top: 0;
-    left: 0;
+  /* CARDS */
+  .item {
     width: 100%;
-    max-width: 440px;
-    height: auto;
-    margin: 12px 0;
+    max-width: 500px;
+    min-width: 0;
+    min-height: 0;
+
+    margin: 0;
     padding-bottom: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
   }
 
-  .item:hover{
-    top: 0;
+  .item:hover {
+    transform: none;
   }
 
-  .item > img,
-  .item > h1,
-  .item > h3{
-    flex: 0 0 100%;
+  .item > img {
+    height: 230px;
   }
 
-  .item > img{
-    height: 220px;
+  .item > h1 {
+    font-size: 24px;
+    margin: 15px 18px 8px;
   }
 
-  .item > h1{
-    font-size: 26px;
-    margin-top: 10px;
-  }
-
-  .item > h3{
+  .item > h3 {
     font-size: 16px;
-    margin-top: 6px;
+    margin: 0 18px;
   }
 
-  .item > h2{
-    position: static;
-    flex: 1;
-    margin: 14px 20px 0;
+  .item > h2 {
     font-size: 22px;
+    margin: auto 18px 0;
+    padding-top: 20px;
   }
 
-  .view{
-    position: static;
-    width: auto;
-    height: auto;
-    margin: 14px 20px 0 0;
-    padding: 8px 24px;
-    font-size: 20px;
+  .view {
+    margin: 15px 18px 0;
+    padding: 9px 22px;
+    font-size: 18px;
   }
 
-  #about{
-    padding: 40px 16px !important; /* the padding is inline in HomePage.jsx */
+  /* ABOUT */
+  #about {
+    padding: 40px 16px !important;
   }
 
-  #about > h1{
+  #about > h1 {
     font-size: 34px;
   }
 
-  #about > p{
-    font-size: 17px;
+  #about > p {
+    font-size: 16px;
   }
 
-  #menu, #about, #intro-sec{
-    scroll-margin-top: 100px;
+  #menu,
+  #about,
+  #intro-sec {
+    scroll-margin-top: 110px;
   }
 }
 
-/* ---- very small phones ---- */
-@media (max-width: 400px){
+/* =====================================================
+   SMALL MOBILE
+   ===================================================== */
+@media (max-width: 400px) {
   .logo-name,
-  .logo-name2{
+  .logo-name2 {
     font-size: 19px;
   }
 
-  .text > h1{
+  .nav-right {
+    gap: 8px 10px;
+  }
+
+  .nav-right a {
+    font-size: 14px;
+  }
+
+  .text > h1 {
     font-size: 30px;
   }
 
-  .nav-right{
-    gap: 6px 10px;
+  .text > h3 {
+    font-size: 15px;
+  }
+
+  .menu > h1 {
+    font-size: 30px;
+  }
+
+  .item > img {
+    height: 200px;
+  }
+
+  .item > h1 {
+    font-size: 22px;
+  }
+
+  .item > h3 {
+    font-size: 15px;
+  }
+
+  .item > h2 {
+    font-size: 20px;
   }
 }

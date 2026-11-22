@@ -57,8 +57,10 @@ export default function HomePage() {
   return (
     <>
       <div className="nav-bar">
-        <span className="logo-name">Dreamy</span>
-        <span className="logo-name2">Bites</span>
+        <div className="brand-logo">
+          <span className="logo-name">Dreamy</span>
+          <span className="logo-name2">Bites</span>
+        </div>
 
         <ul>
           <li><a href="#intro-sec">Home</a></li>
