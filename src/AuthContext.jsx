@@ -13,10 +13,16 @@ export function AuthProvider({ children }) {
     }
   });
 
+  const [loading] = useState(false);
+
   const save = ({ token, user }) => {
     setToken(token);
     setUser(user);
-    try { localStorage.setItem(USER_KEY, JSON.stringify(user)); } catch {}
+
+    try {
+      localStorage.setItem(USER_KEY, JSON.stringify(user));
+    } catch {}
+
     return user;
   };
 
@@ -29,11 +35,14 @@ export function AuthProvider({ children }) {
   const logout = () => {
     setToken(null);
     setUser(null);
-    try { localStorage.removeItem(USER_KEY); } catch {}
+
+    try {
+      localStorage.removeItem(USER_KEY);
+    } catch {}
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

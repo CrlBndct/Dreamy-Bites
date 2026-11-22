@@ -13,6 +13,7 @@ export default function FoodPage() {
   const { addToCart, totalItems } = useCart();
   const { products, loading } = useProducts();
   const { ratings, rate } = useRatings();
+
   const [qty, setQty] = useState(1);
 
   const food = products.find((f) => f.foodId === Number(item));
@@ -22,6 +23,8 @@ export default function FoodPage() {
   const average = food?.rating || 0;
 
   const handleAdd = () => {
+    if (!food || food.available === false || qty < 1) return;
+
     addToCart(food, qty);
     navigate('/cart');
   };
@@ -35,12 +38,20 @@ export default function FoodPage() {
       </div>
 
       {loading ? (
-        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>Loading...</h2>
+        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>
+          Loading...
+        </h2>
       ) : !food ? (
-        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>Item not found.</h2>
+        <h2 style={{ textAlign: 'center', paddingTop: '20vh' }}>
+          Item not found.
+        </h2>
       ) : (
         <div className="container">
-          <img src={food.pic} alt={food.foodName} className="foodImg" />
+          <img
+            src={food.pic}
+            alt={food.foodName}
+            className="foodImg"
+          />
 
           <div className="details">
             <h1 className="proName">{food.foodName}</h1>
@@ -48,21 +59,43 @@ export default function FoodPage() {
 
             <div className="rating-box">
               <StarRating value={Math.round(average)} readOnly />
-              <span className="rating-text">{average.toFixed(1)} ({votes} ratings)</span>
+              <span className="rating-text">
+                {average.toFixed(1)} ({votes} ratings)
+              </span>
             </div>
 
             <div className="my-rating">
-              <span>{myRating ? 'Your rating:' : 'Rate this item:'}</span>
-              <StarRating value={myRating} onChange={(stars) => rate(food.foodId, stars)} />
+              <span>
+                {myRating ? 'Your rating:' : 'Rate this item:'}
+              </span>
+
+              <StarRating
+                value={myRating}
+                onChange={(stars) => rate(food.foodId, stars)}
+              />
             </div>
 
             <div className="buy-row">
-              <span className="pricing">Php {food.price * qty}</span>
+              <span className="pricing">
+                Php {food.price * qty}
+              </span>
 
               <div className="qty-box">
-                <button className="subtract" onClick={() => setQty((q) => Math.max(1, q - 1))}>-</button>
+                <button
+                  className="subtract"
+                  onClick={() => setQty((q) => Math.max(1, q - 1))}
+                >
+                  -
+                </button>
+
                 <span className="quantity">{qty}</span>
-                <button className="add" onClick={() => setQty((q) => q + 1)}>+</button>
+
+                <button
+                  className="add"
+                  onClick={() => setQty((q) => Math.min(99, q + 1))}
+                >
+                  +
+                </button>
               </div>
 
               <button
@@ -70,7 +103,9 @@ export default function FoodPage() {
                 onClick={handleAdd}
                 disabled={food.available === false}
               >
-                {food.available === false ? 'Sold out' : 'Add To My Basket'}
+                {food.available === false
+                  ? 'Sold out'
+                  : 'Add To My Basket'}
               </button>
             </div>
           </div>
