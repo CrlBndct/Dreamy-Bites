@@ -1,45 +1,84 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { api } from './api';
+
+export const STATUSES = [
+  'Pending',
+  'Preparing',
+  'Ready',
+  'Completed',
+];
 
 const OrdersContext = createContext();
-const KEY = 'dreamybites-orders';
-
-export const STATUSES = ['Pending', 'Preparing', 'Ready', 'Completed'];
 
 export function OrdersProvider({ children }) {
-  const [orders, setOrders] = useState(() => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const load = useCallback(async () => {
     try {
-      const saved = JSON.parse(localStorage.getItem(KEY));
-      return Array.isArray(saved) ? saved : [];
-    } catch {
-      return [];
+      const data = await api('/api/orders');
+      setOrders(data);
+      setError('');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
-  });
+  }, []);
 
   useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(orders)); } catch {}
-  }, [orders]);
+    load();
+  }, [load]);
 
-  // details can include: customer, name, phone, type, branchName, address,
-  // when, payment, notes, subtotal, fee, total
-  const placeOrder = ({ items, ...details }) =>
-    setOrders((prev) => [
-      {
-        id: Date.now(),
-        ...details,
-        items: items.map((i) => ({ name: i.foodName, qty: i.quantity, price: i.price })),
-        status: 'Pending',
-        date: new Date().toLocaleString(),
-      },
-      ...prev,
-    ]);
+  const createOrder = async (orderData) => {
+    const result = await api('/api/orders', {
+      method: 'POST',
+      body: orderData,
+    });
 
-  const updateStatus = (id, status) =>
-    setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status } : o)));
+    await load();
+    return result;
+  };
 
-  const deleteOrder = (id) => setOrders((prev) => prev.filter((o) => o.id !== id));
+  const updateOrderStatus = async (id, status) => {
+    try {
+      await api(`/api/orders/${id}`, {
+        method: 'PATCH',
+        body: { status },
+      });
+
+      await load();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
+
+  const deleteOrder = async (id) => {
+    try {
+      await api(`/api/orders/${id}`, {
+        method: 'DELETE',
+      });
+
+      await load();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   return (
-    <OrdersContext.Provider value={{ orders, placeOrder, updateStatus, deleteOrder }}>
+    <OrdersContext.Provider
+      value={{
+        orders,
+        loading,
+        error,
+        refresh: load,
+        createOrder,
+        updateOrderStatus,
+        deleteOrder,
+      }}
+    >
       {children}
     </OrdersContext.Provider>
   );

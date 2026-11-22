@@ -1,10 +1,11 @@
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../CartContext';
 import { useOrders } from '../OrdersContext';
 import { useAuth } from '../AuthContext';
 import { useBranches } from '../BranchesContext';
-import '../styles/foodpage.css'; // styles the .nav header
+import '../styles/foodpage.css';
 import '../styles/cart.css';
 
 const DELIVERY_FEE = 50;
@@ -16,7 +17,6 @@ const TYPES = [
   { id: 'Dine-in', label: 'Dine-in', desc: 'Eat at a branch' },
 ];
 
-// value for <input type="datetime-local" min=...>
 function nowLocal() {
   const d = new Date();
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
@@ -25,8 +25,9 @@ function nowLocal() {
 
 export default function Cart() {
   const navigate = useNavigate();
+
   const { cart, updateQty, removeItem, clearCart, totalPrice } = useCart();
-  const { placeOrder } = useOrders();
+  const { createOrder } = useOrders();
   const { user } = useAuth();
   const { branches } = useBranches();
 
@@ -37,67 +38,97 @@ export default function Cart() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [timing, setTiming] = useState('ASAP'); // ASAP | Later
+  const [timing, setTiming] = useState('ASAP');
   const [when, setWhen] = useState('');
-  const [payment, setPayment] = useState('Cash'); // Cash | GCash
+  const [payment, setPayment] = useState('Cash');
   const [notes, setNotes] = useState('');
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const isDelivery = type === 'Delivery';
-  const fee = isDelivery && totalPrice < FREE_DELIVERY_OVER ? DELIVERY_FEE : 0;
+
+  const fee =
+    isDelivery && totalPrice < FREE_DELIVERY_OVER
+      ? DELIVERY_FEE
+      : 0;
+
   const grandTotal = totalPrice + fee;
 
-  const cashLabel = isDelivery ? 'Cash on delivery' : 'Pay at the counter';
+  const cashLabel = isDelivery
+    ? 'Cash on delivery'
+    : 'Pay at the counter';
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
-    if (!user || cart.length === 0) return;
+
+    if (!user || cart.length === 0 || submitting) return;
+
+    setError('');
 
     if (!name.trim() || !phone.trim()) {
       setError('Please enter your name and phone number.');
       return;
     }
+
     if (isDelivery && !address.trim()) {
       setError('Please enter your delivery address.');
       return;
     }
+
     if (!isDelivery && !branchId) {
       setError('Please choose a branch.');
       return;
     }
+
     if (timing === 'Later' && !when) {
       setError('Please choose the date and time.');
       return;
     }
 
-    const branch = branches.find((b) => String(b.id) === branchId);
+    const branch = branches.find(
+      (b) => String(b.id) === branchId
+    );
 
-    placeOrder({
-      customer: user.email,
-      name: name.trim(),
-      phone: phone.trim(),
-      type,
-      branchName: isDelivery ? '' : branch?.name || '',
-      address: isDelivery ? address.trim() : '',
-      when: timing === 'Later' ? new Date(when).toLocaleString() : 'As soon as possible',
-      payment: payment === 'Cash' ? cashLabel : 'GCash',
-      notes: notes.trim(),
-      items: cart,
-      subtotal: totalPrice,
-      fee,
-      total: grandTotal,
-    });
+    try {
+      setSubmitting(true);
 
-    alert('Thank you for your order! 🍰');
-    clearCart();
-    navigate('/homepage');
+      await createOrder({
+        name: name.trim(),
+        phone: phone.trim(),
+        type,
+        branchName: isDelivery ? '' : branch?.name || '',
+        address: isDelivery ? address.trim() : '',
+        when:
+          timing === 'Later'
+            ? new Date(when).toLocaleString()
+            : 'As soon as possible',
+        payment: payment === 'Cash' ? cashLabel : 'GCash',
+        notes: notes.trim(),
+
+        items: cart.map((i) => ({
+          foodId: i.foodId,
+          quantity: i.quantity,
+        })),
+      });
+
+      clearCart();
+
+      alert('Thank you for your order! 🍰');
+      navigate('/homepage');
+    } catch (err) {
+      setError(err.message || 'Failed to place your order.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <>
       <div className="nav">
         <h1 style={{ color: '#80665C' }}>Dreamy Bites</h1>
-        <Link to="/homepage" className="backHomeBtn">Home</Link>
+        <Link to="/homepage" className="backHomeBtn">
+          Home
+        </Link>
       </div>
 
       <div className="cart-page">
@@ -106,7 +137,9 @@ export default function Cart() {
         {cart.length === 0 ? (
           <>
             <p>Your basket is empty.</p>
-            <Link to="/homepage" className="cart-link">Browse the menu</Link>
+            <Link to="/homepage" className="cart-link">
+              Browse the menu
+            </Link>
           </>
         ) : (
           <>
@@ -120,14 +153,33 @@ export default function Cart() {
                 </div>
 
                 <div className="cart-qty">
-                  <button onClick={() => updateQty(i.foodId, i.quantity - 1)}>-</button>
+                  <button
+                    onClick={() =>
+                      updateQty(i.foodId, i.quantity - 1)
+                    }
+                  >
+                    -
+                  </button>
+
                   <span>{i.quantity}</span>
-                  <button onClick={() => updateQty(i.foodId, i.quantity + 1)}>+</button>
+
+                  <button
+                    onClick={() =>
+                      updateQty(i.foodId, i.quantity + 1)
+                    }
+                  >
+                    +
+                  </button>
                 </div>
 
                 <h3>Php {i.price * i.quantity}</h3>
 
-                <button className="remove" onClick={() => removeItem(i.foodId)}>✕</button>
+                <button
+                  className="remove"
+                  onClick={() => removeItem(i.foodId)}
+                >
+                  ✕
+                </button>
               </div>
             ))}
 
@@ -139,8 +191,15 @@ export default function Cart() {
                   <button
                     type="button"
                     key={t.id}
-                    className={type === t.id ? 'type-card active' : 'type-card'}
-                    onClick={() => { setType(t.id); setError(''); }}
+                    className={
+                      type === t.id
+                        ? 'type-card active'
+                        : 'type-card'
+                    }
+                    onClick={() => {
+                      setType(t.id);
+                      setError('');
+                    }}
                   >
                     <strong>{t.label}</strong>
                     <span>{t.desc}</span>
@@ -149,8 +208,17 @@ export default function Cart() {
               </div>
 
               <div className="field-row">
-                <input placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} />
-                <input placeholder="Phone number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                <input
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+
+                <input
+                  placeholder="Phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
 
               {isDelivery ? (
@@ -161,21 +229,36 @@ export default function Cart() {
                   rows={3}
                 />
               ) : (
-                <select value={branchId} onChange={(e) => setBranchId(e.target.value)}>
+                <select
+                  value={branchId}
+                  onChange={(e) => setBranchId(e.target.value)}
+                >
                   <option value="">Choose a branch...</option>
+
                   {openBranches.map((b) => (
-                    <option key={b.id} value={b.id}>{b.name} ({b.open} - {b.close})</option>
+                    <option key={b.id} value={b.id}>
+                      {b.name} ({b.open} - {b.close})
+                    </option>
                   ))}
                 </select>
               )}
 
               <div className="choice-row">
                 <label>
-                  <input type="radio" checked={timing === 'ASAP'} onChange={() => setTiming('ASAP')} />
+                  <input
+                    type="radio"
+                    checked={timing === 'ASAP'}
+                    onChange={() => setTiming('ASAP')}
+                  />
                   As soon as possible
                 </label>
+
                 <label>
-                  <input type="radio" checked={timing === 'Later'} onChange={() => setTiming('Later')} />
+                  <input
+                    type="radio"
+                    checked={timing === 'Later'}
+                    onChange={() => setTiming('Later')}
+                  />
                   Schedule for later
                 </label>
               </div>
@@ -191,11 +274,20 @@ export default function Cart() {
 
               <div className="choice-row">
                 <label>
-                  <input type="radio" checked={payment === 'Cash'} onChange={() => setPayment('Cash')} />
+                  <input
+                    type="radio"
+                    checked={payment === 'Cash'}
+                    onChange={() => setPayment('Cash')}
+                  />
                   {cashLabel}
                 </label>
+
                 <label>
-                  <input type="radio" checked={payment === 'GCash'} onChange={() => setPayment('GCash')} />
+                  <input
+                    type="radio"
+                    checked={payment === 'GCash'}
+                    onChange={() => setPayment('GCash')}
+                  />
                   GCash
                 </label>
               </div>
@@ -208,22 +300,40 @@ export default function Cart() {
               />
 
               <div className="summary">
-                <p><span>Subtotal</span><span>Php {totalPrice}</span></p>
+                <p>
+                  <span>Subtotal</span>
+                  <span>Php {totalPrice}</span>
+                </p>
+
                 {isDelivery && (
                   <p>
                     <span>Delivery fee</span>
-                    <span>{fee === 0 ? 'Free' : `Php ${fee}`}</span>
+                    <span>
+                      {fee === 0 ? 'Free' : `Php ${fee}`}
+                    </span>
                   </p>
                 )}
+
                 {isDelivery && fee > 0 && (
-                  <p className="hint">Free delivery on orders of Php {FREE_DELIVERY_OVER} or more.</p>
+                  <p className="hint">
+                    Free delivery on orders of Php {FREE_DELIVERY_OVER} or more.
+                  </p>
                 )}
-                <h2 className="cart-total">Total: Php {grandTotal}</h2>
+
+                <h2 className="cart-total">
+                  Total: Php {grandTotal}
+                </h2>
               </div>
 
               {error && <p className="form-error">{error}</p>}
 
-              <button type="submit" className="checkout">Place order</button>
+              <button
+                type="submit"
+                className="checkout"
+                disabled={submitting}
+              >
+                {submitting ? 'Placing order...' : 'Place order'}
+              </button>
             </form>
           </>
         )}

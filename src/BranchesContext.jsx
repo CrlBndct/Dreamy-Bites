@@ -1,31 +1,34 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import { branches as defaultBranches } from './branches';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { api } from './api';
 
 const BranchesContext = createContext();
-const KEY = 'dreamybites-branches';
 
 export function BranchesProvider({ children }) {
-  const [branches, setBranches] = useState(() => {
+  const [branches, setBranches] = useState([]);
+
+  const load = useCallback(async () => {
     try {
-      const saved = JSON.parse(localStorage.getItem(KEY));
-      return Array.isArray(saved) && saved.length ? saved : defaultBranches;
-    } catch {
-      return defaultBranches;
+      setBranches(await api('/api/branches'));
+    } catch (err) {
+      console.error(err.message);
     }
-  });
+  }, []);
 
-  useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(branches)); } catch {}
-  }, [branches]);
+  useEffect(() => { load(); }, [load]);
 
-  const addBranch = (b) =>
-    setBranches((prev) => [...prev, { available: true, ...b, id: Date.now() }]);
+  const run = async (fn) => {
+    try {
+      await fn();
+      await load();
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
+  const addBranch = (b) => run(() => api('/api/branches', { method: 'POST', body: b }));
   const updateBranch = (id, changes) =>
-    setBranches((prev) => prev.map((b) => (b.id === id ? { ...b, ...changes } : b)));
-
-  const deleteBranch = (id) =>
-    setBranches((prev) => prev.filter((b) => b.id !== id));
+    run(() => api(`/api/branches/${id}`, { method: 'PUT', body: changes }));
+  const deleteBranch = (id) => run(() => api(`/api/branches/${id}`, { method: 'DELETE' }));
 
   return (
     <BranchesContext.Provider value={{ branches, addBranch, updateBranch, deleteBranch }}>
