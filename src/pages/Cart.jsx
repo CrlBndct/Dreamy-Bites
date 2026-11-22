@@ -5,11 +5,13 @@ import { useCart } from '../CartContext';
 import { useOrders } from '../OrdersContext';
 import { useAuth } from '../AuthContext';
 import { useBranches } from '../BranchesContext';
+import { imageUrl } from '../imageUrl';
 import '../styles/foodpage.css';
 import '../styles/cart.css';
 
 const DELIVERY_FEE = 50;
 const FREE_DELIVERY_OVER = 500;
+const MAX_QTY = 99;
 
 const TYPES = [
   { id: 'Pickup', label: 'Pickup', desc: 'Collect it at a branch' },
@@ -80,14 +82,24 @@ export default function Cart() {
       return;
     }
 
+    const branch = branches.find(
+      (b) => String(b.id) === branchId
+    );
+
+    if (!isDelivery && (!branch || branch.available === false)) {
+      setError('Please choose an available branch.');
+      return;
+    }
+
     if (timing === 'Later' && !when) {
       setError('Please choose the date and time.');
       return;
     }
 
-    const branch = branches.find(
-      (b) => String(b.id) === branchId
-    );
+    if (timing === 'Later' && new Date(when) <= new Date()) {
+      setError('Please choose a future date and time.');
+      return;
+    }
 
     try {
       setSubmitting(true);
@@ -96,7 +108,7 @@ export default function Cart() {
         name: name.trim(),
         phone: phone.trim(),
         type,
-        branchName: isDelivery ? '' : branch?.name || '',
+        branchName: isDelivery ? '' : branch.name,
         address: isDelivery ? address.trim() : '',
         when:
           timing === 'Later'
@@ -145,7 +157,10 @@ export default function Cart() {
           <>
             {cart.map((i) => (
               <div className="cart-item" key={i.foodId}>
-                <img src={i.pic} alt={i.foodName} />
+                <img
+                  src={imageUrl(i.pic)}
+                  alt={i.foodName}
+                />
 
                 <div className="cart-info">
                   <h2>{i.foodName}</h2>
@@ -154,8 +169,13 @@ export default function Cart() {
 
                 <div className="cart-qty">
                   <button
+                    type="button"
+                    disabled={i.quantity <= 1}
                     onClick={() =>
-                      updateQty(i.foodId, i.quantity - 1)
+                      updateQty(
+                        i.foodId,
+                        Math.max(1, i.quantity - 1)
+                      )
                     }
                   >
                     -
@@ -164,8 +184,13 @@ export default function Cart() {
                   <span>{i.quantity}</span>
 
                   <button
+                    type="button"
+                    disabled={i.quantity >= MAX_QTY}
                     onClick={() =>
-                      updateQty(i.foodId, i.quantity + 1)
+                      updateQty(
+                        i.foodId,
+                        Math.min(MAX_QTY, i.quantity + 1)
+                      )
                     }
                   >
                     +
@@ -175,6 +200,7 @@ export default function Cart() {
                 <h3>Php {i.price * i.quantity}</h3>
 
                 <button
+                  type="button"
                   className="remove"
                   onClick={() => removeItem(i.foodId)}
                 >
@@ -212,12 +238,14 @@ export default function Cart() {
                   placeholder="Your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
                 />
 
                 <input
                   placeholder="Phone number"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  required
                 />
               </div>
 
@@ -227,11 +255,13 @@ export default function Cart() {
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   rows={3}
+                  required
                 />
               ) : (
                 <select
                   value={branchId}
                   onChange={(e) => setBranchId(e.target.value)}
+                  required
                 >
                   <option value="">Choose a branch...</option>
 
@@ -247,8 +277,12 @@ export default function Cart() {
                 <label>
                   <input
                     type="radio"
+                    name="timing"
                     checked={timing === 'ASAP'}
-                    onChange={() => setTiming('ASAP')}
+                    onChange={() => {
+                      setTiming('ASAP');
+                      setWhen('');
+                    }}
                   />
                   As soon as possible
                 </label>
@@ -256,6 +290,7 @@ export default function Cart() {
                 <label>
                   <input
                     type="radio"
+                    name="timing"
                     checked={timing === 'Later'}
                     onChange={() => setTiming('Later')}
                   />
@@ -269,6 +304,7 @@ export default function Cart() {
                   min={nowLocal()}
                   value={when}
                   onChange={(e) => setWhen(e.target.value)}
+                  required
                 />
               )}
 
@@ -276,6 +312,7 @@ export default function Cart() {
                 <label>
                   <input
                     type="radio"
+                    name="payment"
                     checked={payment === 'Cash'}
                     onChange={() => setPayment('Cash')}
                   />
@@ -285,6 +322,7 @@ export default function Cart() {
                 <label>
                   <input
                     type="radio"
+                    name="payment"
                     checked={payment === 'GCash'}
                     onChange={() => setPayment('GCash')}
                   />
@@ -330,7 +368,7 @@ export default function Cart() {
               <button
                 type="submit"
                 className="checkout"
-                disabled={submitting}
+                disabled={submitting || cart.length === 0}
               >
                 {submitting ? 'Placing order...' : 'Place order'}
               </button>

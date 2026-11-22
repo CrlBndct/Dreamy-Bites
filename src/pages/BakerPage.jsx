@@ -1,9 +1,10 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { useProducts } from '../ProductsContext';
 import { useOrders, STATUSES } from '../OrdersContext';
+import { imageUrl } from '../imageUrl';
 import BranchesManager from './BranchesManager';
 import '../styles/baker.css';
 import '../styles/cart.css';
@@ -17,6 +18,10 @@ const EMPTY = {
 };
 
 const TYPE_FILTERS = ['All', 'Pickup', 'Delivery', 'Dine-in'];
+
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export default function BakerPage() {
   const navigate = useNavigate();
@@ -37,11 +42,15 @@ export default function BakerPage() {
   const [form, setForm] = useState(EMPTY);
   const [editingId, setEditingId] = useState(null);
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState('');
+  const [imageError, setImageError] = useState('');
+
+  /* ---------- SALES CALCULATIONS ---------- */
+
   const shownOrders = orders.filter(
     (o) => typeFilter === 'All' || o.type === typeFilter
   );
-
-  /* ---------- SALES CALCULATIONS ---------- */
 
   const completed = orders.filter((o) => o.status === 'Completed');
 
@@ -114,8 +123,58 @@ export default function BakerPage() {
     });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    setImageError('');
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      setImageError('Only JPG, PNG, and WEBP images are allowed.');
+      e.target.value = '';
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      setImageError('Image must not exceed 5 MB.');
+      e.target.value = '';
+      return;
+    }
+
+    if (preview && selectedFile) {
+      URL.revokeObjectURL(preview);
+    }
+
+    setSelectedFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
+
+  const clearSelectedImage = () => {
+    if (preview && selectedFile) {
+      URL.revokeObjectURL(preview);
+    }
+
+    setSelectedFile(null);
+    setPreview('');
+    setImageError('');
+  };
+
+  const resetForm = () => {
+    clearSelectedImage();
+    setForm(EMPTY);
+    setEditingId(null);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setImageError('');
+
+    if (!editingId && !selectedFile) {
+      setImageError('Please select an image for the product.');
+      return;
+    }
 
     const data = {
       ...form,
@@ -123,20 +182,37 @@ export default function BakerPage() {
     };
 
     try {
-      if (editingId) {
-        await updateProduct(editingId, data);
+      if (selectedFile) {
+        const formData = new FormData();
+
+        formData.append('foodName', data.foodName);
+        formData.append('foodDes', data.foodDes);
+        formData.append('price', String(data.price));
+        formData.append('category', data.category);
+        formData.append('image', selectedFile);
+
+        if (editingId) {
+          await updateProduct(editingId, formData);
+        } else {
+          await addProduct(formData);
+        }
       } else {
-        await addProduct(data);
+        if (editingId) {
+          await updateProduct(editingId, data);
+        } else {
+          await addProduct(data);
+        }
       }
 
-      setForm(EMPTY);
-      setEditingId(null);
+      resetForm();
     } catch (err) {
       alert(err.message || 'Failed to save product.');
     }
   };
 
   const startEdit = (p) => {
+    clearSelectedImage();
+
     setEditingId(p.foodId);
 
     setForm({
@@ -147,12 +223,13 @@ export default function BakerPage() {
       pic: p.pic,
     });
 
+    setPreview(p.pic);
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const cancelEdit = () => {
-    setEditingId(null);
-    setForm(EMPTY);
+    resetForm();
   };
 
   const handleDelete = async (p) => {
@@ -189,6 +266,16 @@ export default function BakerPage() {
     logout();
     navigate('/');
   };
+
+  /* ---------- IMAGE PREVIEW CLEANUP ---------- */
+
+  useEffect(() => {
+    return () => {
+      if (selectedFile && preview) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [selectedFile, preview]);
 
   return (
     <>
@@ -493,13 +580,49 @@ export default function BakerPage() {
                 <option value="Beverage">Beverage</option>
               </select>
 
+              <label htmlFor="product-image">
+                Product image
+              </label>
+
               <input
-                name="pic"
-                placeholder="Image path (e.g. /Brownie.jpg)"
-                value={form.pic}
-                onChange={handleChange}
-                required
+                id="product-image"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                onChange={handleImageChange}
               />
+
+              {preview && (
+                <div className="image-preview">
+                  <img
+                    src={preview.startsWith('blob:') ? preview : imageUrl(preview)}
+                    alt="Product preview"
+                    style={{
+                      maxWidth: '200px',
+                      maxHeight: '200px',
+                      objectFit: 'contain',
+                    }}
+                  />
+
+                  <p>
+                    {selectedFile
+                      ? selectedFile.name
+                      : 'Current product image'}
+                  </p>
+
+                  {selectedFile && (
+                    <button
+                      type="button"
+                      onClick={clearSelectedImage}
+                    >
+                      Remove selected image
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {imageError && (
+                <p className="form-error">{imageError}</p>
+              )}
 
               <div>
                 <button type="submit" className="primary">
@@ -516,7 +639,7 @@ export default function BakerPage() {
 
             {products.map((p) => (
               <div className="product-row" key={p.foodId}>
-                <img src={p.pic} alt={p.foodName} />
+                <img src={imageUrl(p.pic)} alt={p.foodName} />
 
                 <div className="product-info">
                   <h3>{p.foodName}</h3>

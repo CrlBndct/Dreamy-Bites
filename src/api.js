@@ -1,3 +1,4 @@
+
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 const TOKEN_KEY = 'dreamybites-token';
 const USER_KEY = 'dreamybites-user';
@@ -24,7 +25,9 @@ export async function api(path, { method = 'GET', body } = {}) {
   const headers = {};
   const token = getToken();
 
-  if (body !== undefined) {
+  const isFormData = body instanceof FormData;
+
+  if (body !== undefined && !isFormData) {
     headers['Content-Type'] = 'application/json';
   }
 
@@ -38,7 +41,12 @@ export async function api(path, { method = 'GET', body } = {}) {
     res = await fetch(`${BASE}${path}`, {
       method,
       headers,
-      body: body !== undefined ? JSON.stringify(body) : undefined,
+      body:
+        body !== undefined
+          ? isFormData
+            ? body
+            : JSON.stringify(body)
+          : undefined,
     });
   } catch {
     throw new Error('Cannot reach the server. Is it running?');

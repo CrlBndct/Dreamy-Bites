@@ -1,9 +1,11 @@
+
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useProducts } from '../ProductsContext';
 import { useCart } from '../CartContext';
 import StarRating from '../StarRating';
 import { useRatings } from '../useRatings';
+import { imageUrl } from '../imageUrl';
 import '../styles/foodpage.css';
 
 export default function FoodPage() {
@@ -12,7 +14,7 @@ export default function FoodPage() {
 
   const { addToCart, totalItems } = useCart();
   const { products, loading } = useProducts();
-  const { ratings, rate } = useRatings();
+  const { ratings, rate, loading: ratingsLoading } = useRatings();
 
   const [qty, setQty] = useState(1);
 
@@ -48,7 +50,7 @@ export default function FoodPage() {
       ) : (
         <div className="container">
           <img
-            src={food.pic}
+            src={imageUrl(food.pic)}
             alt={food.foodName}
             className="foodImg"
           />
@@ -66,13 +68,19 @@ export default function FoodPage() {
 
             <div className="my-rating">
               <span>
-                {myRating ? 'Your rating:' : 'Rate this item:'}
+                {ratingsLoading
+                  ? 'Loading your rating...'
+                  : myRating
+                    ? 'Your rating:'
+                    : 'Rate this item:'}
               </span>
 
-              <StarRating
-                value={myRating}
-                onChange={(stars) => rate(food.foodId, stars)}
-              />
+              {!ratingsLoading && (
+                <StarRating
+                  value={myRating}
+                  onChange={(stars) => rate(food.foodId, stars)}
+                />
+              )}
             </div>
 
             <div className="buy-row">
